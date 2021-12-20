@@ -1,0 +1,63 @@
+---
+title: "Data Loading (R)"
+output: html_document
+---
+
+<small>Tutorial written by: Hannah-Marie Martiny (hanmar@food.dtu.dk)<br>
+Last updated: 20-12-2021</small>
+
+In this tutorial, a brief overview of how to load the data in the different formats are given: MySQL, TSV and HDF.
+
+<em>NOTE: The various settings that are sensitive are stored in a config.json file, but just change the settings to what fit your own setup.</em>
+```{r}
+library('rjson')
+config <- fromJSON(file="../config.json")
+
+database <- config$database # name of database
+host <- config$host # host address of MySQL server
+port <- config$port # port of MySQL server
+user <- config$user # user name
+passwd <- config$password # password for user 
+dataDir <- config$datadir # directory where data files are stored
+```
+
+
+## MySQL
+### Loading MySQL dumps
+For each of the dump files (.sql), load them with the command `mysql db_name < dump-file.sql`. `db_name` is the name of database to contain the tables, and the `dump-file.sql` is the file containing the table structure and data.
+
+We have written a short bash script [`loader.sh`](loader.sh) for this, where we give the path to the directory containing dump files (`-d $datadir`) and the name of the MySQL database (`-n $database`):
+```{bash eval=FALSE, include=TRUE}
+loader.sh -d $datadir -n $database
+```
+### Reading data from a MySQL  database
+We can use the [RMySQL](https://cran.r-project.org/web/packages/RMySQL/) package to connect to the MySQL database.
+```{r}
+# install.packages("RMySQL")
+library(RMySQL)
+
+mydb = dbConnect(MySQL(), user=user, password=passwd, host=host, port=as.integer(port), dbname=database)
+rs = dbSendQuery(mydb, "select * from metadata")
+data = fetch(rs, n=5)
+data
+```
+
+
+## Tab-separated files (TSV)
+It is fairly straightforward to read the .tsv files in R with either native functions or for example readr.
+```{r}
+# with native read.csv
+data <- read.csv(file.path(dataDir, 'metadata.tsv'), sep='\t')
+head(data)
+```
+```{r}
+# with readr
+# install.packages("readr")
+data <- readr::read_tsv(file.path(dataDir, 'metadata.tsv'))
+head(data)
+```
+
+
+## HDF5 files
+There are no straight forward ways in R to load the HDF5 file types, although there are several libraries that claim to do it, like [hdf5r](https://hhoeflin.github.io/hdf5r/) and [rhdf5](https://www.bioconductor.org/packages/devel/bioc/vignettes/rhdf5/inst/doc/rhdf5.html). Let us know if you can get it to work!
+
