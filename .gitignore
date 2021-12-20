@@ -1,0 +1,10 @@
+#folders
+data/
+env/
+.ipynb_checkpoints/
+.virtual_documents/
+*/.ipynb_checkpoints/
+.vscode
+
+#files
+*/config.json
