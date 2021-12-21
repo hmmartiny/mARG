@@ -1,6 +1,6 @@
 ---
 title: "Data Loading (R)"
-output: html_document
+output: github_document
 ---
 
 <small>Tutorial written by: Hannah-Marie Martiny (hanmar@food.dtu.dk)<br>

@@ -1,4 +1,4 @@
-This directory is organized as according to topic, where in each folder there is a guide for Python users (.ipynb) and another one for R users (.rmd and .md).
+This directory is organized as according to topic, where in each folder there is a guide for Python users (`.ipynb`) and another one for R users (`.rmd` and `.md`).
 
 Folders:
 - [<b>Data Loading</b>](00.Data_loading): How to read the data files.
