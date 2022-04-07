@@ -53,6 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data loading" href="00_Data_loading.html" />
     <link rel="prev" title="Welcome" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -101,6 +102,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Tables documentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_Data_loading.html">
+   Data loading
   </a>
  </li>
 </ul>
@@ -199,6 +205,13 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal nav-link" href="#arg-counts">
    ARG counts
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#resfinder-annotations">
+     ResFinder annotations
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#rrna-counts">
@@ -208,11 +221,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#diversity-measures">
    Diversity measures
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#resfinder-annotation">
-   ResFinder annotation
   </a>
  </li>
 </ul>
@@ -244,6 +252,13 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal nav-link" href="#arg-counts">
    ARG counts
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#resfinder-annotations">
+     ResFinder annotations
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#rrna-counts">
@@ -253,11 +268,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#diversity-measures">
    Diversity measures
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#resfinder-annotation">
-   ResFinder annotation
   </a>
  </li>
 </ul>
@@ -271,9 +281,9 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="tables-documentation">
 <h1>Tables documentation<a class="headerlink" href="#tables-documentation" title="Permalink to this headline">¶</a></h1>
-<p>The data available at [ZENODO LINK] consists of five different tables, which will be introduced on this page.</p>
+<p>The data available at [ZENODO LINK] consists of five different tables, which will be introduced on this page. This data collection consists of <a class="reference internal" href="#metadata"><span class="std std-ref">metadata</span></a> for each of the sequencing datasets we retrieved, as well as the results of aligning reads to reference sequences from the <a class="reference internal" href="#counts-arg"><span class="std std-ref">ResFinder</span></a> and <a class="reference internal" href="#counts-silva"><span class="std std-ref">Silva</span></a> databases and accompanying <a class="reference internal" href="#diversity"><span class="std std-ref">diversity measurements</span></a>.</p>
 <div class="section" id="metadata">
-<h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
 <table class="table">
 <colgroup>
 <col style="width: 33%" />
@@ -363,7 +373,7 @@ const thebe_selector_output = ".output, .cell_output"
 </table>
 </div>
 <div class="section" id="arg-counts">
-<h2>ARG counts<a class="headerlink" href="#arg-counts" title="Permalink to this headline">¶</a></h2>
+<span id="counts-arg"></span><h2>ARG counts<a class="headerlink" href="#arg-counts" title="Permalink to this headline">¶</a></h2>
 <table class="table">
 <colgroup>
 <col style="width: 33%" />
@@ -431,9 +441,40 @@ const thebe_selector_output = ".output, .cell_output"
 </tr>
 </tbody>
 </table>
+<div class="section" id="resfinder-annotations">
+<span id="arg-anno"></span><h3>ResFinder annotations<a class="headerlink" href="#resfinder-annotations" title="Permalink to this headline">¶</a></h3>
+<p>To group ARGs by classes, phenotypes or mechanisms, one can use the annotation table below. It contains the annotation given in the official documentation for the ResFinder database (<a class="reference external" href="https://bitbucket.org/genomicepidemiology/resfinder_db">link</a>).</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Explanation</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>gene</p></td>
+<td><p>Name of gene (refSequence)</p></td>
+<td><p>aac(2’)-Ia_1_L06156</p></td>
+</tr>
+<tr class="row-odd"><td><p>anno_type</p></td>
+<td><p>What type of label is given for the gene (Class, gene_length, Phenotype, Mechanism)</p></td>
+<td><p>Class</p></td>
+</tr>
+<tr class="row-even"><td><p>anno_value</p></td>
+<td><p>The label for the annotation type</p></td>
+<td><p>Aminoglycoside</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="section" id="rrna-counts">
-<h2>rRNA counts<a class="headerlink" href="#rrna-counts" title="Permalink to this headline">¶</a></h2>
+<span id="counts-silva"></span><h2>rRNA counts<a class="headerlink" href="#rrna-counts" title="Permalink to this headline">¶</a></h2>
 <table class="table">
 <colgroup>
 <col style="width: 33%" />
@@ -491,7 +532,7 @@ const thebe_selector_output = ".output, .cell_output"
 </table>
 </div>
 <div class="section" id="diversity-measures">
-<h2>Diversity measures<a class="headerlink" href="#diversity-measures" title="Permalink to this headline">¶</a></h2>
+<span id="diversity"></span><h2>Diversity measures<a class="headerlink" href="#diversity-measures" title="Permalink to this headline">¶</a></h2>
 <table class="table">
 <colgroup>
 <col style="width: 33%" />
@@ -540,36 +581,6 @@ const thebe_selector_output = ".output, .cell_output"
 </tbody>
 </table>
 </div>
-<div class="section" id="resfinder-annotation">
-<h2>ResFinder annotation<a class="headerlink" href="#resfinder-annotation" title="Permalink to this headline">¶</a></h2>
-<table class="table">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Column</p></th>
-<th class="head"><p>Explanation</p></th>
-<th class="head"><p>Example</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>gene</p></td>
-<td><p>Name of gene (refSequence)</p></td>
-<td><p>aac(2’)-Ia_1_L06156</p></td>
-</tr>
-<tr class="row-odd"><td><p>anno_type</p></td>
-<td><p>What type of label is given for the gene (Class, gene_length, Phenotype, Mechanism)</p></td>
-<td><p>Class</p></td>
-</tr>
-<tr class="row-even"><td><p>anno_value</p></td>
-<td><p>The label for the annotation type</p></td>
-<td><p>Aminoglycoside</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -603,6 +614,13 @@ const thebe_selector_output = ".output, .cell_output"
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Welcome</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="00_Data_loading.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data loading</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             
