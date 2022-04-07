@@ -156,7 +156,7 @@ hej
 ### Distribution of metagenomes per host
 This is a pretty similar process as for looking at the distribution of samples according to sampling year, instead we just look at the `host` labels.
 
-NOTE: There are many host labels, so let us look at those with at least 100K samples. 
+NOTE: There are many host labels, so let us look at those with at least 1000 samples. 
 
 `````{tabbed} Python
 hwkj

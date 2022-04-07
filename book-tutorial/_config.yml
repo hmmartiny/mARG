@@ -1,7 +1,7 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: Tutorials for using the 214K metagenomic data collection
+title: The 214K ARG metagenomic data collection
 author: Hannah-Marie Martiny
 copyright: 2022
 logo: logo.png

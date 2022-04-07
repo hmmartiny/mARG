@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data loading &#8212; Tutorials for using the 214K metagenomic data collection</title>
+    <title>Data loading &#8212; The 214K ARG metagenomic data collection</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -53,8 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Visualizing Metadata" href="01_Visualizing_metadata.html" />
-    <link rel="prev" title="Introduction to the data collection" href="Tables.html" />
+    <link rel="prev" title="Tables documentation" href="Tables.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -83,7 +82,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Tutorials for using the 214K metagenomic data collection</h1>
+      <h1 class="site-logo" id="site-title">The 214K ARG metagenomic data collection</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -101,17 +100,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Tables.html">
-   Introduction to the data collection
+   Tables documentation
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Data loading
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="01_Visualizing_metadata.html">
-   Visualizing Metadata
   </a>
  </li>
 </ul>
@@ -417,8 +411,8 @@ find <span class="nv">$dumpdir</span> -type f -name <span class="s2">&quot;*.sql
 <div class="section" id="reading-mysql-data">
 <h3>Reading MySQL data<a class="headerlink" href="#reading-mysql-data" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="bf202f37-d572-46d1-b4e4-c77ca9cec55b" name="598ba660-871f-43f2-9847-204c670f835f" type="radio">
-</input><label class="tabbed-label" for="bf202f37-d572-46d1-b4e4-c77ca9cec55b">
+<input checked="checked" id="762de8fc-3fc3-4880-8884-f8827240d74f" name="6c2b91b1-ce1a-4864-96b7-68c44c68d29b" type="radio">
+</input><label class="tabbed-label" for="762de8fc-3fc3-4880-8884-f8827240d74f">
 Python</label><div class="tabbed-content docutils">
 <p>There are different ways for retrieving data lying in a MySQL database. Here, we show two approaches: one with Pandas and one with a custom function.</p>
 <details class="sphinx-bs dropdown card mb-3">
@@ -475,8 +469,8 @@ Custom function<div class="summary-down docutils">
 </div>
 </div>
 </details></div>
-<input id="51781f04-6e66-432b-9ef0-e4ec54d6747e" name="598ba660-871f-43f2-9847-204c670f835f" type="radio">
-</input><label class="tabbed-label" for="51781f04-6e66-432b-9ef0-e4ec54d6747e">
+<input id="69e3c81d-85d7-416f-824b-263c01d49815" name="6c2b91b1-ce1a-4864-96b7-68c44c68d29b" type="radio">
+</input><label class="tabbed-label" for="69e3c81d-85d7-416f-824b-263c01d49815">
 R</label><div class="tabbed-content docutils">
 <p>We can use the <a class="reference external" href="https://cran.r-project.org/web/packages/RMySQL/">RMySQL</a> package to connect to the MySQL database.</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;RMySQL&quot;</span><span class="p">)</span>
@@ -497,8 +491,8 @@ R</label><div class="tabbed-content docutils">
 <div class="section" id="loading-tsv-files">
 <h3>Loading TSV files<a class="headerlink" href="#loading-tsv-files" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="04b280fe-7444-4322-b097-826c20011173" name="20eee5e5-081a-4b9b-99c2-eae3f995024a" type="radio">
-</input><label class="tabbed-label" for="04b280fe-7444-4322-b097-826c20011173">
+<input checked="checked" id="2e9b53e1-89b7-4dcd-aa2d-12b86ca500d6" name="d455fa6c-ecfc-488a-9e3f-b6e248dd0d5b" type="radio">
+</input><label class="tabbed-label" for="2e9b53e1-89b7-4dcd-aa2d-12b86ca500d6">
 Python</label><div class="tabbed-content docutils">
 <p>For example, with Pandas:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -509,8 +503,8 @@ Python</label><div class="tabbed-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="0b438399-f6d2-4b4a-a0e5-8557388fb342" name="20eee5e5-081a-4b9b-99c2-eae3f995024a" type="radio">
-</input><label class="tabbed-label" for="0b438399-f6d2-4b4a-a0e5-8557388fb342">
+<input id="2c66a1d9-5f1b-4ceb-aa75-358b87b42d9d" name="d455fa6c-ecfc-488a-9e3f-b6e248dd0d5b" type="radio">
+</input><label class="tabbed-label" for="2c66a1d9-5f1b-4ceb-aa75-358b87b42d9d">
 R</label><div class="tabbed-content docutils">
 <p>To read the .tsv files in R one can use either base functions or for example <a class="reference external" href="https://readr.tidyverse.org/">readr</a>.</p>
 <details class="sphinx-bs dropdown card mb-3">
@@ -546,8 +540,8 @@ readr<div class="summary-down docutils">
 <div class="section" id="loading-hdf-files">
 <h3>Loading HDF files<a class="headerlink" href="#loading-hdf-files" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="320cf340-2159-4b18-9a22-55aac0b12cab" name="66fc9e16-c3c6-47ad-a3cd-2bad0aed98cd" type="radio">
-</input><label class="tabbed-label" for="320cf340-2159-4b18-9a22-55aac0b12cab">
+<input checked="checked" id="73d1d1a4-5ec1-4528-a690-76ac76746cb2" name="c45f72e3-badc-4233-a5ab-05c49fc5e13d" type="radio">
+</input><label class="tabbed-label" for="73d1d1a4-5ec1-4528-a690-76ac76746cb2">
 Python</label><div class="tabbed-content docutils">
 <p>The Pandas library contains the function <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.read_hdf.html"><code class="docutils literal notranslate"><span class="pre">pandas.read_hdf</span></code></a>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -558,8 +552,8 @@ Python</label><div class="tabbed-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="7804f3ad-b4c8-4c94-9c08-4e01f5c6d268" name="66fc9e16-c3c6-47ad-a3cd-2bad0aed98cd" type="radio">
-</input><label class="tabbed-label" for="7804f3ad-b4c8-4c94-9c08-4e01f5c6d268">
+<input id="9e08e34c-7b09-4d1e-b7e9-ab12b18fb149" name="c45f72e3-badc-4233-a5ab-05c49fc5e13d" type="radio">
+</input><label class="tabbed-label" for="9e08e34c-7b09-4d1e-b7e9-ab12b18fb149">
 R</label><div class="tabbed-content docutils">
 <p>There are no straight forward ways in R to load the HDF5 file types, although there are several libraries that claim to do it, like <a class="reference external" href="https://hhoeflin.github.io/hdf5r/">hdf5r</a> and <a class="reference external" href="https://www.bioconductor.org/packages/devel/bioc/vignettes/rhdf5/inst/doc/rhdf5.html">rhdf5</a>.
 Let me know if you can get it to work!</p>
@@ -598,15 +592,8 @@ Let me know if you can get it to work!</p>
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Introduction to the data collection</p>
+            <p class="prev-next-title">Tables documentation</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="01_Visualizing_metadata.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Visualizing Metadata</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             

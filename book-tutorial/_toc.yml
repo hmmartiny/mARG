@@ -6,4 +6,4 @@ root: intro
 chapters:
 - file: Tables
 - file: 00_Data_loading
-- file: 01_Visualizing_metadata
+# - file: 01_Visualizing_metadata
