@@ -1,4 +1,4 @@
-# Introduction to the data collection
+# Tables documentation
 The data available at [ZENODO LINK] consists of five different tables, which will be introduced on this page.
 
 ## Metadata

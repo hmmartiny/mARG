@@ -174,11 +174,11 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+            href="https://github.com/hmmartiny/mARG"><button type="button" class="btn btn-secondary topbarbtn"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F00_Data_loading.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/hmmartiny/mARG/issues/new?title=Issue%20on%20page%20%2F00_Data_loading.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -199,7 +199,7 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/00_Data_loading.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/hmmartiny/mARG/master?urlpath=tree/book-tutorial/00_Data_loading.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -417,8 +417,8 @@ find <span class="nv">$dumpdir</span> -type f -name <span class="s2">&quot;*.sql
 <div class="section" id="reading-mysql-data">
 <h3>Reading MySQL data<a class="headerlink" href="#reading-mysql-data" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="735e5592-f62d-4709-b295-2056a2c1b1ec" name="86e400ac-c5a1-42da-b4b1-90642ae82139" type="radio">
-</input><label class="tabbed-label" for="735e5592-f62d-4709-b295-2056a2c1b1ec">
+<input checked="checked" id="bf202f37-d572-46d1-b4e4-c77ca9cec55b" name="598ba660-871f-43f2-9847-204c670f835f" type="radio">
+</input><label class="tabbed-label" for="bf202f37-d572-46d1-b4e4-c77ca9cec55b">
 Python</label><div class="tabbed-content docutils">
 <p>There are different ways for retrieving data lying in a MySQL database. Here, we show two approaches: one with Pandas and one with a custom function.</p>
 <details class="sphinx-bs dropdown card mb-3">
@@ -475,8 +475,8 @@ Custom function<div class="summary-down docutils">
 </div>
 </div>
 </details></div>
-<input id="4c89c8d4-d6a3-434c-a06d-740240213708" name="86e400ac-c5a1-42da-b4b1-90642ae82139" type="radio">
-</input><label class="tabbed-label" for="4c89c8d4-d6a3-434c-a06d-740240213708">
+<input id="51781f04-6e66-432b-9ef0-e4ec54d6747e" name="598ba660-871f-43f2-9847-204c670f835f" type="radio">
+</input><label class="tabbed-label" for="51781f04-6e66-432b-9ef0-e4ec54d6747e">
 R</label><div class="tabbed-content docutils">
 <p>We can use the <a class="reference external" href="https://cran.r-project.org/web/packages/RMySQL/">RMySQL</a> package to connect to the MySQL database.</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;RMySQL&quot;</span><span class="p">)</span>
@@ -497,8 +497,8 @@ R</label><div class="tabbed-content docutils">
 <div class="section" id="loading-tsv-files">
 <h3>Loading TSV files<a class="headerlink" href="#loading-tsv-files" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="08bfe3e5-ff04-4ce1-9622-f80e7037d827" name="ca72ae52-9b05-4db3-b943-22c90479b374" type="radio">
-</input><label class="tabbed-label" for="08bfe3e5-ff04-4ce1-9622-f80e7037d827">
+<input checked="checked" id="04b280fe-7444-4322-b097-826c20011173" name="20eee5e5-081a-4b9b-99c2-eae3f995024a" type="radio">
+</input><label class="tabbed-label" for="04b280fe-7444-4322-b097-826c20011173">
 Python</label><div class="tabbed-content docutils">
 <p>For example, with Pandas:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -509,8 +509,8 @@ Python</label><div class="tabbed-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="0fd4b7ae-231c-497e-b679-3830cb194ceb" name="ca72ae52-9b05-4db3-b943-22c90479b374" type="radio">
-</input><label class="tabbed-label" for="0fd4b7ae-231c-497e-b679-3830cb194ceb">
+<input id="0b438399-f6d2-4b4a-a0e5-8557388fb342" name="20eee5e5-081a-4b9b-99c2-eae3f995024a" type="radio">
+</input><label class="tabbed-label" for="0b438399-f6d2-4b4a-a0e5-8557388fb342">
 R</label><div class="tabbed-content docutils">
 <p>To read the .tsv files in R one can use either base functions or for example <a class="reference external" href="https://readr.tidyverse.org/">readr</a>.</p>
 <details class="sphinx-bs dropdown card mb-3">
@@ -546,8 +546,8 @@ readr<div class="summary-down docutils">
 <div class="section" id="loading-hdf-files">
 <h3>Loading HDF files<a class="headerlink" href="#loading-hdf-files" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="f5e011d0-1028-48a5-a611-a5f0fa9a7cf4" name="8aec7d17-f29d-447b-a235-17e303cb4d44" type="radio">
-</input><label class="tabbed-label" for="f5e011d0-1028-48a5-a611-a5f0fa9a7cf4">
+<input checked="checked" id="320cf340-2159-4b18-9a22-55aac0b12cab" name="66fc9e16-c3c6-47ad-a3cd-2bad0aed98cd" type="radio">
+</input><label class="tabbed-label" for="320cf340-2159-4b18-9a22-55aac0b12cab">
 Python</label><div class="tabbed-content docutils">
 <p>The Pandas library contains the function <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.read_hdf.html"><code class="docutils literal notranslate"><span class="pre">pandas.read_hdf</span></code></a>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -558,8 +558,8 @@ Python</label><div class="tabbed-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="c6e53785-7aa0-4a1f-9d69-8dce15e5da5c" name="8aec7d17-f29d-447b-a235-17e303cb4d44" type="radio">
-</input><label class="tabbed-label" for="c6e53785-7aa0-4a1f-9d69-8dce15e5da5c">
+<input id="7804f3ad-b4c8-4c94-9c08-4e01f5c6d268" name="66fc9e16-c3c6-47ad-a3cd-2bad0aed98cd" type="radio">
+</input><label class="tabbed-label" for="7804f3ad-b4c8-4c94-9c08-4e01f5c6d268">
 R</label><div class="tabbed-content docutils">
 <p>There are no straight forward ways in R to load the HDF5 file types, although there are several libraries that claim to do it, like <a class="reference external" href="https://hhoeflin.github.io/hdf5r/">hdf5r</a> and <a class="reference external" href="https://www.bioconductor.org/packages/devel/bioc/vignettes/rhdf5/inst/doc/rhdf5.html">rhdf5</a>.
 Let me know if you can get it to work!</p>
