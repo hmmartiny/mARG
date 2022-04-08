@@ -1,6 +1,7 @@
 # Tables documentation
-The data available at [ZENODO LINK] consists of five different tables, which will be introduced on this page.
+The data available at [ZENODO LINK] consists of five different tables, which will be introduced on this page. This data collection consists of [metadata](metadata) for each of the sequencing datasets we retrieved, as well as the results of aligning reads to reference sequences from the [ResFinder](counts-ARG) and [Silva](counts-Silva) databases and accompanying [diversity measurements](diversity).
 
+(metadata)=
 ## Metadata
 ```{list-table}
 :header-rows: 1
@@ -63,6 +64,7 @@ The data available at [ZENODO LINK] consists of five different tables, which wil
   - 1247751
 ```
 
+(counts-ARG)=
 ## ARG counts
 ```{list-table}
 :header-rows: 1
@@ -110,6 +112,26 @@ The data available at [ZENODO LINK] consists of five different tables, which wil
   - 1428
 ```
 
+(arg-anno)=
+### ResFinder annotations
+To group ARGs by classes, phenotypes or mechanisms, one can use the annotation table below. It contains the annotation given in the official documentation for the ResFinder database ([link](https://bitbucket.org/genomicepidemiology/resfinder_db)).
+```{list-table}
+:header-rows: 1
+* - Column 
+  - Explanation
+  - Example
+* - gene
+  - Name of gene (refSequence)
+  - aac(2')-Ia_1_L06156
+* - anno_type
+  - What type of label is given for the gene (Class, gene_length, Phenotype, Mechanism)
+  - Class
+* - anno_value
+  - The label for the annotation type
+  - Aminoglycoside
+```
+
+(counts-Silva)=
 ## rRNA counts
 ```{list-table}
 :header-rows: 1
@@ -147,7 +169,7 @@ The data available at [ZENODO LINK] consists of five different tables, which wil
   - Sum of fragments aligned to rRNA genes belonging to the corresponding genus.
   - 10.7744
 ```
-
+(diversity)=
 ## Diversity measures
 ```{list-table}
 :header-rows: 1
@@ -178,21 +200,4 @@ The data available at [ZENODO LINK] consists of five different tables, which wil
 * - Simpson
   - Simpson (1-D) diversity index for category
   - 0.604705 
-```
-
-## ResFinder annotation
-```{list-table}
-:header-rows: 1
-* - Column 
-  - Explanation
-  - Example
-* - gene
-  - Name of gene (refSequence)
-  - aac(2')-Ia_1_L06156
-* - anno_type
-  - What type of label is given for the gene (Class, gene_length, Phenotype, Mechanism)
-  - Class
-* - anno_value
-  - The label for the annotation type
-  - Aminoglycoside
 ```
