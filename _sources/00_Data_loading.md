@@ -177,6 +177,8 @@ data <- readr::read_tsv(file.path(dataDir, 'metadata.tsv'))
 ## Loading HDF files
 HDF5 is a data software library that is built for fast I/O processing and storage.
 
+Note that the rRNA.h5 file consists of 4737 batches, each of a 10000 rows. In order to load it properly, loop through the keys to load all of the data. The key format is ```table_{i}```  and i=0,1,2,...,4736
+
 `````{tabbed} Python
 The Pandas library contains the function [`pandas.read_hdf`](https://pandas.pydata.org/docs/reference/api/pandas.read_hdf.html).
 
