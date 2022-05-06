@@ -34,11 +34,11 @@ python -c "import pandas as pd; df=pd.read_csv('data/ResFinder_anno.tsv', sep='\
 echo "Retrived ResFinder anno"
 
 # Dump rRNA mapping results
-mysqldump AvA Bac_public2 > data/rRNA_tmp.sql
-sed 's/Bac_public2/rRNA_results/' data/rRNA_tmp.sql > data/rRNA.sql
+mysqldump AvA Bac_public > data/rRNA_tmp.sql
+sed 's/Bac_public/rRNA_results/' data/rRNA_tmp.sql > data/rRNA.sql
 rm data/rRNA_tmp.sql
 
-mysql --database=AvA -e "select * from Bac_public2" > data/rRNA.tsv
+mysql --database=AvA -e "select * from Bac_public" > data/rRNA.tsv
 python -c "import pandas as pd; df=pd.read_csv('data/rRNA.tsv', sep='\t'); df.to_hdf('data/rRNA.h5', key='rRNA')"
 
 echo "Retrived rRNA data"
