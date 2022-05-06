@@ -144,10 +144,9 @@ data
 ```
 `````
 
-## Working with TSV files
+## Loding TSV files
 It is fairly straightforward to work with the .tsv files.
 
-### Loading TSV files
 `````{tabbed} Python
 For example, with Pandas:
 ```{code-block}
@@ -175,10 +174,9 @@ data <- readr::read_tsv(file.path(dataDir, 'metadata.tsv'))
 ````
 `````
 
-## Working HDF files
+## Loading HDF files
 HDF5 is a data software library that is built for fast I/O processing and storage.
 
-### Loading HDF files
 `````{tabbed} Python
 The Pandas library contains the function [`pandas.read_hdf`](https://pandas.pydata.org/docs/reference/api/pandas.read_hdf.html).
 
