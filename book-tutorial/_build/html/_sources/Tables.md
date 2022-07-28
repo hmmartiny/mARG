@@ -3,6 +3,7 @@ The data available at [ZENODO LINK] consists of five different tables, which wil
 
 (metadata)=
 ## Metadata
+Files: metadata.sql, metadata.tsv, metadata.h5
 ```{list-table}
 :header-rows: 1
 * - Column
@@ -66,6 +67,7 @@ The data available at [ZENODO LINK] consists of five different tables, which wil
 
 (counts-ARG)=
 ## ARG counts
+Files: ARG.sql, ARG.tsv, ARG.h5
 ```{list-table}
 :header-rows: 1
 * - Column 
@@ -114,6 +116,7 @@ The data available at [ZENODO LINK] consists of five different tables, which wil
 
 (arg-anno)=
 ### ResFinder annotations
+Files: ResFinder_anno.sql, ResFinder_anno.tsv, ResFinder_anno.h5
 To group ARGs by classes, phenotypes or mechanisms, one can use the annotation table below. It contains the annotation given in the official documentation for the ResFinder database ([link](https://bitbucket.org/genomicepidemiology/resfinder_db)).
 ```{list-table}
 :header-rows: 1
@@ -133,6 +136,7 @@ To group ARGs by classes, phenotypes or mechanisms, one can use the annotation t
 
 (counts-Silva)=
 ## rRNA counts
+Files: rRNA.sql, rRNA.tsv, rRNA.h5
 ```{list-table}
 :header-rows: 1
 * - Column 
@@ -171,6 +175,7 @@ To group ARGs by classes, phenotypes or mechanisms, one can use the annotation t
 ```
 (diversity)=
 ## Diversity measures
+Files: diversity.sql, diversity.tsv, diversity.h5
 ```{list-table}
 :header-rows: 1
 * - Column 
