@@ -1,5 +1,5 @@
 # Tables documentation
-The data available at [ZENODO LINK] consists of five different tables, which will be introduced on this page. This data collection consists of [metadata](metadata) for each of the sequencing datasets we retrieved, as well as the results of aligning reads to reference sequences from the [ResFinder](counts-ARG) and [Silva](counts-Silva) databases and accompanying [diversity measurements](diversity).
+The data available [here](https://doi.org/10.5281/zenodo.6919377) and consists of five different tables, which will be introduced on this page. This data collection consists of [metadata](metadata) for each of the sequencing datasets we retrieved, as well as the results of aligning reads to reference sequences from the [ResFinder](counts-ARG) and [Silva](counts-Silva) databases and accompanying [diversity measurements](diversity).
 
 (metadata)=
 ## Metadata

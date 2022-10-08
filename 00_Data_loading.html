@@ -53,6 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Figure 1" href="02_figures.html" />
     <link rel="prev" title="Tables documentation" href="Tables.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -106,6 +107,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Data loading
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_figures.html">
+   Figure 1
   </a>
  </li>
 </ul>
@@ -383,8 +389,8 @@ find <span class="nv">$dumpdir</span> -type f -name <span class="s2">&quot;*.sql
 <div class="section" id="reading-mysql-data">
 <h3>Reading MySQL data<a class="headerlink" href="#reading-mysql-data" title="Permalink to this headline">¶</a></h3>
 <div class="tabbed-set docutils">
-<input checked="checked" id="7c05fee1-caba-4e98-9d90-7e3018b8b872" name="41d495fd-acde-4eb9-bfda-2e12b6d6759c" type="radio">
-</input><label class="tabbed-label" for="7c05fee1-caba-4e98-9d90-7e3018b8b872">
+<input checked="checked" id="12f30138-fd9f-4e9c-a817-ff182fb2cce5" name="9e8e938e-53bd-4347-86c7-240502a7dc5f" type="radio">
+</input><label class="tabbed-label" for="12f30138-fd9f-4e9c-a817-ff182fb2cce5">
 Python</label><div class="tabbed-content docutils">
 <p>There are different ways for retrieving data lying in a MySQL database. Here, we show two approaches: one with Pandas and one with a custom function.</p>
 <details class="sphinx-bs dropdown card mb-3">
@@ -441,8 +447,8 @@ Custom function<div class="summary-down docutils">
 </div>
 </div>
 </details></div>
-<input id="d61adc0e-cb43-4c1e-87a7-65b362b56afd" name="41d495fd-acde-4eb9-bfda-2e12b6d6759c" type="radio">
-</input><label class="tabbed-label" for="d61adc0e-cb43-4c1e-87a7-65b362b56afd">
+<input id="a1a3fb5b-8d6e-479b-99cc-0242015f0e9b" name="9e8e938e-53bd-4347-86c7-240502a7dc5f" type="radio">
+</input><label class="tabbed-label" for="a1a3fb5b-8d6e-479b-99cc-0242015f0e9b">
 R</label><div class="tabbed-content docutils">
 <p>We can use the <a class="reference external" href="https://cran.r-project.org/web/packages/RMySQL/">RMySQL</a> package to connect to the MySQL database.</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;RMySQL&quot;</span><span class="p">)</span>
@@ -461,8 +467,8 @@ R</label><div class="tabbed-content docutils">
 <h2>Loding TSV files<a class="headerlink" href="#loding-tsv-files" title="Permalink to this headline">¶</a></h2>
 <p>It is fairly straightforward to work with the .tsv files.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="b56eca6d-d894-4bba-82f2-a7b6ab25b9b8" name="740cc31b-568f-43de-a877-fc278e49ae78" type="radio">
-</input><label class="tabbed-label" for="b56eca6d-d894-4bba-82f2-a7b6ab25b9b8">
+<input checked="checked" id="658f9101-5699-411b-aed2-f1516b8b1788" name="f40e2036-8677-426b-aa1b-912db5225efb" type="radio">
+</input><label class="tabbed-label" for="658f9101-5699-411b-aed2-f1516b8b1788">
 Python</label><div class="tabbed-content docutils">
 <p>For example, with Pandas:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -473,8 +479,8 @@ Python</label><div class="tabbed-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="73070624-a570-49ef-bd49-354c14604a39" name="740cc31b-568f-43de-a877-fc278e49ae78" type="radio">
-</input><label class="tabbed-label" for="73070624-a570-49ef-bd49-354c14604a39">
+<input id="fcfe53c6-3609-43d6-b0cf-6c29ece1711a" name="f40e2036-8677-426b-aa1b-912db5225efb" type="radio">
+</input><label class="tabbed-label" for="fcfe53c6-3609-43d6-b0cf-6c29ece1711a">
 R</label><div class="tabbed-content docutils">
 <p>To read the .tsv files in R one can use either base functions or for example <a class="reference external" href="https://readr.tidyverse.org/">readr</a>.</p>
 <details class="sphinx-bs dropdown card mb-3">
@@ -508,8 +514,8 @@ readr<div class="summary-down docutils">
 <p>HDF5 is a data software library that is built for fast I/O processing and storage.</p>
 <p>Note that the rRNA.h5 file consists of 4737 batches, each of a 10000 rows. In order to load it properly, loop through the keys to load all of the data. The key format is <code class="docutils literal notranslate"><span class="pre">table_{i}</span></code>  and i=0,1,2,…,4736.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="af033d0b-c01f-4c35-aabc-b010319cbcfc" name="9240945d-b3d8-4a5d-9f71-f241381d22b9" type="radio">
-</input><label class="tabbed-label" for="af033d0b-c01f-4c35-aabc-b010319cbcfc">
+<input checked="checked" id="84a2fe94-4b42-4cd5-b058-d64d9d53cf03" name="2db24e28-94eb-48cb-88e0-afab6a9dca4b" type="radio">
+</input><label class="tabbed-label" for="84a2fe94-4b42-4cd5-b058-d64d9d53cf03">
 Python</label><div class="tabbed-content docutils">
 <p>The Pandas library contains the function <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.read_hdf.html"><code class="docutils literal notranslate"><span class="pre">pandas.read_hdf</span></code></a>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -520,8 +526,8 @@ Python</label><div class="tabbed-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="43f0a45d-1c19-440e-a63b-9536930c8ec6" name="9240945d-b3d8-4a5d-9f71-f241381d22b9" type="radio">
-</input><label class="tabbed-label" for="43f0a45d-1c19-440e-a63b-9536930c8ec6">
+<input id="db453de8-fc06-4036-bc54-169b4cff6628" name="2db24e28-94eb-48cb-88e0-afab6a9dca4b" type="radio">
+</input><label class="tabbed-label" for="db453de8-fc06-4036-bc54-169b4cff6628">
 R</label><div class="tabbed-content docutils">
 <p>There are no straight forward ways in R to load the HDF5 file types, although there are several libraries that claim to do it, like <a class="reference external" href="https://hhoeflin.github.io/hdf5r/">hdf5r</a> and <a class="reference external" href="https://www.bioconductor.org/packages/devel/bioc/vignettes/rhdf5/inst/doc/rhdf5.html">rhdf5</a>.
 Let me know if you can get it to work!</p>
@@ -561,6 +567,13 @@ Let me know if you can get it to work!</p>
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Tables documentation</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="02_figures.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Figure 1</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             

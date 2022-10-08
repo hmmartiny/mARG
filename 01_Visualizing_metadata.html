@@ -102,6 +102,16 @@ const thebe_selector_output = ".output, .cell_output"
    Tables documentation
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_Data_loading.html">
+   Data loading
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_figures.html">
+   Figure 1
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -290,8 +300,8 @@ const thebe_selector_output = ".output, .cell_output"
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
 <p>The various settings that are sensitive are stored in a config.json file, but just change the settings to what fit your own setup.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="444bed1f-b784-470a-9f85-0aba7ee9e510" name="f164ec41-9b91-402f-b2ba-985a62cd91ca" type="radio">
-</input><label class="tabbed-label" for="444bed1f-b784-470a-9f85-0aba7ee9e510">
+<input checked="checked" id="94106277-1df1-4249-8984-5b289f1eeed1" name="43278d10-7be6-49c5-a583-0c762d855280" type="radio">
+</input><label class="tabbed-label" for="94106277-1df1-4249-8984-5b289f1eeed1">
 Python</label><div class="tabbed-content docutils">
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../config.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
@@ -324,8 +334,8 @@ Python</label><div class="tabbed-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="027bc223-bcc2-4606-a95a-70bbba9ce68a" name="f164ec41-9b91-402f-b2ba-985a62cd91ca" type="radio">
-</input><label class="tabbed-label" for="027bc223-bcc2-4606-a95a-70bbba9ce68a">
+<input id="6e9c7fe9-e95a-40ce-9937-f8cdf38a80bd" name="43278d10-7be6-49c5-a583-0c762d855280" type="radio">
+</input><label class="tabbed-label" for="6e9c7fe9-e95a-40ce-9937-f8cdf38a80bd">
 R</label><div class="tabbed-content docutils">
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&#39;rjson&#39;</span><span class="p">)</span>
 <span class="n">config</span> <span class="o">&lt;-</span> <span class="nf">fromJSON</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s">&quot;../config.json&quot;</span><span class="p">)</span>
@@ -351,8 +361,8 @@ R</label><div class="tabbed-content docutils">
 <h2>Loading metadata<a class="headerlink" href="#loading-metadata" title="Permalink to this headline">¶</a></h2>
 <p>The metadata are available in either the MySQL table <code class="docutils literal notranslate"><span class="pre">metadata</span></code> or in TSV format in the file <code class="docutils literal notranslate"><span class="pre">metadata.tsv</span></code> and HDF5 format <code class="docutils literal notranslate"><span class="pre">metadata.h5</span></code>. Let’s load it from our MySQL database.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="93886f0a-96ba-4d53-9d9f-00646ac1c3cd" name="fd682b43-4b0a-402f-bf4c-489ba9a29bdb" type="radio">
-</input><label class="tabbed-label" for="93886f0a-96ba-4d53-9d9f-00646ac1c3cd">
+<input checked="checked" id="879310ca-21e7-48af-bbef-c5a64bcab950" name="aa820ada-e065-4625-988b-720cd26c7eca" type="radio">
+</input><label class="tabbed-label" for="879310ca-21e7-48af-bbef-c5a64bcab950">
 Python</label><div class="tabbed-content docutils">
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the metadata from MySQL database</span>
 <span class="n">cli_args</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;--database=</span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2"> --host=</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2"> --port=</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2"> --user=</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2"> --password=</span><span class="si">{</span><span class="n">passwd</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -366,8 +376,8 @@ Python</label><div class="tabbed-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="fb50fcb8-f3b2-4619-bed8-4ac327fc6ea4" name="fd682b43-4b0a-402f-bf4c-489ba9a29bdb" type="radio">
-</input><label class="tabbed-label" for="fb50fcb8-f3b2-4619-bed8-4ac327fc6ea4">
+<input id="27c226c3-1d51-47f9-8c43-52e639ac52fc" name="aa820ada-e065-4625-988b-720cd26c7eca" type="radio">
+</input><label class="tabbed-label" for="27c226c3-1d51-47f9-8c43-52e639ac52fc">
 R</label><div class="tabbed-content docutils">
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">mydb</span> <span class="o">=</span> <span class="nf">dbConnect</span><span class="p">(</span><span class="nf">MySQL</span><span class="p">(),</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">passwd</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="nf">as.integer</span><span class="p">(</span><span class="n">port</span><span class="p">),</span> <span class="n">dbname</span><span class="o">=</span><span class="n">database</span><span class="p">)</span>
 <span class="n">rs</span> <span class="o">=</span> <span class="nf">dbSendQuery</span><span class="p">(</span><span class="n">mydb</span><span class="p">,</span> <span class="s">&quot;select * from metadata&quot;</span><span class="p">)</span>
@@ -421,13 +431,13 @@ Metadata columns<div class="summary-down docutils">
 <h3>Distribution of metagenomes per year<a class="headerlink" href="#distribution-of-metagenomes-per-year" title="Permalink to this headline">¶</a></h3>
 <p>We first create the column <code class="docutils literal notranslate"><span class="pre">collection_year</span></code> from the <code class="docutils literal notranslate"><span class="pre">collection_date</span></code> column, and then we count the number of samples per year. Finally, we visualize these counts in a barplot.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="524b07c8-3671-4dd8-a48e-e296c4248aa4" name="e743a21d-5b1c-499b-be93-e2e9bf2aa13f" type="radio">
-</input><label class="tabbed-label" for="524b07c8-3671-4dd8-a48e-e296c4248aa4">
+<input checked="checked" id="9a81a845-c69e-4605-a837-34d936757538" name="fc789bab-dd70-4cc3-b598-d134e4e33145" type="radio">
+</input><label class="tabbed-label" for="9a81a845-c69e-4605-a837-34d936757538">
 Python</label><div class="tabbed-content docutils">
 <p>hwkj</p>
 </div>
-<input id="75a68cf8-ebe1-48c2-bc15-48a6e049b816" name="e743a21d-5b1c-499b-be93-e2e9bf2aa13f" type="radio">
-</input><label class="tabbed-label" for="75a68cf8-ebe1-48c2-bc15-48a6e049b816">
+<input id="e3e26dc8-bf65-4435-a008-be3df16d5052" name="fc789bab-dd70-4cc3-b598-d134e4e33145" type="radio">
+</input><label class="tabbed-label" for="e3e26dc8-bf65-4435-a008-be3df16d5052">
 R</label><div class="tabbed-content docutils">
 <p>hej</p>
 </div>
@@ -437,13 +447,13 @@ R</label><div class="tabbed-content docutils">
 <h3>Distribution of metagenomes per continent<a class="headerlink" href="#distribution-of-metagenomes-per-continent" title="Permalink to this headline">¶</a></h3>
 <p>This is a pretty similar process as for looking at the distribution of samples according to sampling year, instead we just look at the <code class="docutils literal notranslate"><span class="pre">continent</span></code> labels.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="8f9758cf-e717-4948-a9be-1cc3f05f3c97" name="08b2acab-194c-49ae-bb0c-38e919d26db7" type="radio">
-</input><label class="tabbed-label" for="8f9758cf-e717-4948-a9be-1cc3f05f3c97">
+<input checked="checked" id="41eb3325-2e3f-4adc-bc94-1b08681b5b49" name="e95683af-1844-4295-89ff-a5c604544a8e" type="radio">
+</input><label class="tabbed-label" for="41eb3325-2e3f-4adc-bc94-1b08681b5b49">
 Python</label><div class="tabbed-content docutils">
 <p>hwkj</p>
 </div>
-<input id="4454980a-464c-4c4d-baa7-3c0ca6268cc2" name="08b2acab-194c-49ae-bb0c-38e919d26db7" type="radio">
-</input><label class="tabbed-label" for="4454980a-464c-4c4d-baa7-3c0ca6268cc2">
+<input id="cb2527c7-1380-471a-8e05-cbe82d5141a2" name="e95683af-1844-4295-89ff-a5c604544a8e" type="radio">
+</input><label class="tabbed-label" for="cb2527c7-1380-471a-8e05-cbe82d5141a2">
 R</label><div class="tabbed-content docutils">
 <p>hej</p>
 </div>
@@ -454,13 +464,13 @@ R</label><div class="tabbed-content docutils">
 <p>This is a pretty similar process as for looking at the distribution of samples according to sampling year, instead we just look at the <code class="docutils literal notranslate"><span class="pre">host</span></code> labels.</p>
 <p>NOTE: There are many host labels, so let us look at those with at least 1000 samples.</p>
 <div class="tabbed-set docutils">
-<input checked="checked" id="7ba8cddb-e1d4-452d-9d12-d87d9dea15d1" name="9b6c1e56-d502-4ae7-87d8-bd2c08d14155" type="radio">
-</input><label class="tabbed-label" for="7ba8cddb-e1d4-452d-9d12-d87d9dea15d1">
+<input checked="checked" id="416e6cf6-839b-42e3-8cb6-ee2e76379000" name="760c9c8f-b370-4576-88f0-d439b489e27e" type="radio">
+</input><label class="tabbed-label" for="416e6cf6-839b-42e3-8cb6-ee2e76379000">
 Python</label><div class="tabbed-content docutils">
 <p>hwkj</p>
 </div>
-<input id="dc40eefe-233f-492d-bec0-794aba94983b" name="9b6c1e56-d502-4ae7-87d8-bd2c08d14155" type="radio">
-</input><label class="tabbed-label" for="dc40eefe-233f-492d-bec0-794aba94983b">
+<input id="3e2e3236-07f7-487a-b5b6-791c41078e65" name="760c9c8f-b370-4576-88f0-d439b489e27e" type="radio">
+</input><label class="tabbed-label" for="3e2e3236-07f7-487a-b5b6-791c41078e65">
 R</label><div class="tabbed-content docutils">
 <p>hej</p>
 </div>
