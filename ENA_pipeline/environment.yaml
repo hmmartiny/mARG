@@ -1,0 +1,14 @@
+name: AvA
+channels:
+  - conda-forge
+  - bioconda
+  - default
+dependencies:
+  - python=3.8.0
+  - snakemake
+  - tabulate==0.8.10
+  - kma
+  - pip
+  - pip:
+    - pandas==1.3.5
+    - numpy==1.21.2
