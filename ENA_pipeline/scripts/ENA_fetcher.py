@@ -553,7 +553,9 @@ if __name__ == "__main__":
         print("No records found. Exiting..")
         sys.exit()
 
-    sample_accessions = check_metadata(run_records.sample_accession.unique().tolist(), db_args)
+    sample_accessions=run_records.sample_accession.unique().tolist()
+    if args.check_db:
+        sample_accessions = check_metadata(run_records.sample_accession.unique().tolist(), db_args)
     print("Pulling samples metadata...", end='\r')
     sample_records, env_records = ena.get_sampledata(sample_accessions=sample_accessions, k=1)
     print("Pulling samples metadata... Done\n")
@@ -576,7 +578,8 @@ if __name__ == "__main__":
     total_bytes = [int(y) for x in run_records['fastq_bytes'].apply(lambda x: x.split(';')).values for y in x if len(y) > 0]
 
     print("# Results #")
-    filter_db(db_args, args.low_date, args.min_reads, args.filters)
+    if args.check_db:
+        filter_db(db_args, args.low_date, args.min_reads, args.filters)
     print()
     
     print("Data to be downloaded:")
