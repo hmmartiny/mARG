@@ -1,19 +1,24 @@
+### setup
 configfile: "config.yaml"
 
-rule query_ena:
-    """
-    Query ENA for metagenomic datasets, update database, and make files with ascp commands for download
-    """
-    params:
-        baseDir=config['baseDir'],
-        fromDate=config['from_date'],
-        toDate=config['to_date'],
-        batchSize=config['batchSize'],
-        outFile=config['outFile']
-    log: "logs/ena_query.log"
-    message: "Retrieving metadata and run_accessions from ENA"
-    conda: "environment.yaml"
-    shell:
-        """
-        python scripts/ENA_fetcher.py -d {params.fromDate} -td {params.toDate} -b {params.baseDir} --no-update --no-check_db --out_file {params.outFile} --batch_size {params.batchSize} > {log}
-        """
+batchOverviewFile = config['outFile'] + '_batches.list'
+batches = []
+with open(batchOverviewFile) as f:
+    for l in f: 
+        batches.append(l.strip())
+
+for b in batches:
+    rule download:
+        input: 
+            batch = b
+        log: "logs/download.log"
+        threads: workflow.cores
+        shell: "(parallel -j {threads} < {input}) > {log}" 
+
+    rule get_runs:
+        params:
+            baseDir=config['baseDir']
+        shell:
+            """
+            find {params.baseDir} -mindepth 2 -type f -name '*.fastq.gz'
+            """

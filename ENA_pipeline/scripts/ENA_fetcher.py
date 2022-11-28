@@ -8,6 +8,7 @@ import os
 import datetime
 import subprocess
 import numpy as np
+import platform
 
 from funcs import query_db
 
@@ -43,7 +44,7 @@ def parse_args():
     out_args.add_argument(
         '--out_file',
         type=str,
-        default='ena_ascp_download.sh',
+        default='ena_ascp_download',
         help='Write ASCP commands to a file. Default: ena_ascp_download.sh',
         dest='cmd_file'
     )
@@ -435,15 +436,20 @@ def check_metadata(sample_accessions, db_args):
 
 def aspera_file(run_records, dest, outfile, batch_size=1):
 
-    openssh = '/services/tools/ascp/3.9.6/cli/etc/asperaweb_id_dsa.openssh'
+    if platform.system() == 'Linux':
+        openssh = '/services/tools/ascp/3.9.6/cli/etc/asperaweb_id_dsa.openssh'
+    elif platform.system() == 'Darwin':
+        openssh = os.path.expanduser('~/Applications/Aspera\ Connect.app/Contents/Resources/asperaweb_id_dsa.openssh')
     aspera_cmd = "ascp -d -QT -k 1 -l 300m -P33001 -i {openssh} era-fasp@{path} {out_file}"
     
     # batch = 0
     # batchsize=0
-
+    batchFiles = []
     b = 0
     current_batchSize = 0
-    out = open(outfile.replace('.sh', f'_{b}.sh'), 'w')
+    batchFile = outfile + f'_{b}.sh'
+    out = open(batchFile, 'w')
+    batchFiles.append(batchFile)
     for _, record in run_records.iterrows():
         fastq_aspera = record['fastq_aspera'].split(';')
         project = record['study_accession']
@@ -458,7 +464,7 @@ def aspera_file(run_records, dest, outfile, batch_size=1):
             cmd = aspera_cmd.format(
                 openssh=openssh,
                 path=path,
-                out_file=out_file
+                out_file=file_dest
             )
 
             print(cmd, file=out)
@@ -467,9 +473,15 @@ def aspera_file(run_records, dest, outfile, batch_size=1):
             out.close()
             b += 1
             current_batchSize = 0
-            out = open(outfile.replace('.sh', f'_{b}.sh'), 'w')
+            batchFile = outfile + f'_{b}.sh'
+            out = open(batchFile, 'w')
+            batchFiles.append(batchFile)
     
     out.close()
+
+    # save list with batch files
+    with open(outfile + '_batches.list', 'w') as f:
+        print("\n".join(batchFiles), file=f)
 
 def to_sql(df, table, db_args, temp_name='temp.csv'):
 
@@ -548,7 +560,8 @@ if __name__ == "__main__":
 
     # filters
     n_samples_org = sample_records.shape[0]
-    sample_records['collection_date_year'] = pd.to_datetime(sample_records['collection_date']).dt.year
+    sample_records['collection_date'] = pd.to_datetime(sample_records['collection_date'], errors='coerce')
+    sample_records['collection_date_year'] = sample_records['collection_date'].dt.year
     if len(args.filters) > 0:
         to_drop = sample_records.query(args.filters)
         run_records = run_records.loc[ ~(run_records.sample_accession.isin(to_drop.sample_accession))]

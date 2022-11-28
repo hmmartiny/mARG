@@ -1,8 +1,8 @@
 ### Querying ENA ###
-from_date: "2010-01-01"
-to_date: "2023-01-01"
+from_date: "2020-01-01"
+to_date: "2020-01-03"
 
 ### ASCP settings ###
 baseDir: 'AvA/'
 batchSize: "10"
-outFile: 'ena_ascp_download.sh'
+outFile: 'results/ena_ascp_download'
