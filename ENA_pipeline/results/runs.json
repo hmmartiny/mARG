@@ -5,6 +5,8 @@
     },
     "SRR953926": {
         "projid": "PRJNA636661",
-        "files": ["SRR953926_1.fastq.gz", "SRR953926_2.fastq.gz"]
+        "files": {
+            "SRR953926_1.fastq.gz": "era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR953/SRR953926/SRR953926_1.fastq.gz", 
+            "SRR953926_2.fastq.gz": "era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR953/SRR953926/SRR953926_2.fastq.gz"}
     }
 }
