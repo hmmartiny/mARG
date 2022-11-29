@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - bioconda
   - default
+  - hcc
 dependencies:
   - python=3.8.0
   - snakemake
@@ -12,6 +13,8 @@ dependencies:
   - parallel==20211122
   - pip
   - mysql==8.0.28
+  - fastqc==0.11.9
+  - bbmap==38.18
   - pip:
     - pandas==1.3.5
     - numpy==1.21.2

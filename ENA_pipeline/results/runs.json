@@ -1,0 +1,10 @@
+{
+    "DRR072192": {
+        "projid": "PRJNA636661",
+        "files": ["DRR072192.fastq.gz"]
+    },
+    "SRR953926": {
+        "projid": "PRJNA636661",
+        "files": ["SRR953926_1.fastq.gz", "SRR953926_2.fastq.gz"]
+    }
+}
