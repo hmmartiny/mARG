@@ -17,7 +17,7 @@ rule query_ena:
         batchSize=config['batchSize'],
         outFile=config['outFile']
     output:
-        batchOverviewFile
+        batchOverviewFile ### TODO: fails here?
     log: "logs/ena_query.log"
     message: "Retrieving metadata and run_accessions from ENA"
     conda: "environment.yaml"
@@ -26,19 +26,21 @@ rule query_ena:
         python ../../scripts/ENA_fetcher.py -d {params.fromDate} -td {params.toDate} -b {params.baseDir} --no-update --no-check_db --out_file {params.outFile} --batch_size {params.batchSize} > {log}
         """
 
-# rule download:
-#     input: f"{config['outFile']}"
-#     log: "logs/download.log"
-#     message: "Downloading raw FASTQ files"
-#     shell:
-#     """
-#     parallel -j 1 < {input}
-#     """
+# Goal is to get the list of batches from the previus rule - DOES NOT WORK.
+checkpoint get_batches: 
+    params:
+        outFile=config['outFile']
+    shell: """
+    ls {params.outFile}*.sh
+    """
 
-
-
-# for batch in batches:
-#     rule download:
-#         params: batchcmds = batch
-#         log: "logs/download.log"
-#         shell: "echo {params.batchFile} > {log}"
+rule download:
+    input: f"{config['outFile']}"
+    log: "logs/download.log"
+    message: "Downloading raw FASTQ files"
+    shell: """
+    echo {input}
+    """
+    # """
+    # parallel -j 1 < {input}
+    # """
