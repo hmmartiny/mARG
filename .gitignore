@@ -1,16 +1,16 @@
 #folders
-data/
-env/
-.ipynb_checkpoints/
-.virtual_documents/
-*/.ipynb_checkpoints/
+data
+env
+envs
+.ipynb_checkpoints
+.virtual_documents
 .vscode
-*/.snakemake/
-*/__pycache__/
-__pycache__/
-*/logs/
-*/chunks/
+.snakemake
+__pycache__
+logs
+chunks
 
 #files
 */config.json
 .DS_Store
+__init__.py
