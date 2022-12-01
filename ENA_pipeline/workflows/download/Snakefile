@@ -23,7 +23,7 @@ rule query_ena:
     conda: "environment.yaml"
     shell:
         """
-        python scripts/ENA_fetcher.py -d {params.fromDate} -td {params.toDate} -b {params.baseDir} --no-update --no-check_db --out_file {params.outFile} --batch_size {params.batchSize} > {log}
+        python ../../scripts/ENA_fetcher.py -d {params.fromDate} -td {params.toDate} -b {params.baseDir} --no-update --no-check_db --out_file {params.outFile} --batch_size {params.batchSize} > {log}
         """
 
 # rule download:
