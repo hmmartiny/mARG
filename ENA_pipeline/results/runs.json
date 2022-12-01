@@ -1,12 +1,33 @@
 {
     "DRR072192": {
-        "projid": "PRJNA636661",
-        "files": ["DRR072192.fastq.gz"]
+        "projid": "PRJDB5180",
+        "type": "SINGLE",
+        "files": {
+            "DRR072192.fastq.gz": "era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/DRR072/DRR072192/DRR072192.fastq.gz"
+        }
     },
-    "SRR953926": {
-        "projid": "PRJNA636661",
+    "ERR3083899": {
+        "projid": "PRJEB30901",
+        "type": "PAIRED",
         "files": {
             "SRR953926_1.fastq.gz": "era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR953/SRR953926/SRR953926_1.fastq.gz", 
-            "SRR953926_2.fastq.gz": "era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR953/SRR953926/SRR953926_2.fastq.gz"}
+            "SRR953926_2.fastq.gz": "era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR953/SRR953926/SRR953926_2.fastq.gz"
+        }
+    },
+    "SRR8135076": {
+        "projid": "PRJNA495173", 
+        "type": "PAIRED",
+        "files": {
+            "SRR8135076_1.fastq.gz" : "era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR813/006/SRR8135076/SRR8135076_1.fastq.gz",
+            "SRR8135075_2.fastq.gz": "era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR813/005/SRR8135075/SRR8135075_2.fastq.gz"
+        }
+    },
+    "SRR8135126": {
+        "projid": "PRJNA495173", 
+        "type": "SINGLE",
+        "files": {
+            "SRR8135076_1.fastq.gz" : "era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR813/006/SRR8135126/SRR8135126_1.fastq.gz",
+            "SRR8135075_2.fastq.gz": "era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR813/006/SRR8135126/SRR8135126_2.fastq.gz"
+        }
     }
 }
