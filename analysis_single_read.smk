@@ -118,9 +118,9 @@ rule kma_single_end_reads_resfinder:
         	"results/kma_resfinder/single_end/{single_reads}/{single_reads}.res",
         	"results/kma_resfinder/single_end/{single_reads}/{single_reads}.vcf.gz",
         	"results/kma_resfinder/single_end/{single_reads}/{single_reads}.mapstat",
-        	"results/kma_resfinder/single_end/{single_reads}/{single_reads}.sam"
+        	"results/kma_resfinder/single_end/{single_reads}/{single_reads}.bam"
 	params:
-		db="/home/databases/metagenomics/db/ResFinder_20220825/ResFinder_20220825",
+		db="prerequisites/resfinder_db/resfinder_db_all.fsa",
 		outdir="results/kma_resfinder/single_end/{single_reads}/{single_reads}",
 		kma_params="-mem_mode -ef -1t1 -nf -vcf -sam -matrix"
 	envmodules:
@@ -128,7 +128,7 @@ rule kma_single_end_reads_resfinder:
 		"kma/1.4.7"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/kma_resfinder/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} > results/kma_resfinder/single_end/{wildcards.single_reads}/{wildcards.single_reads}.sam
+		/usr/bin/time -v --output=results/kma_resfinder/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_resfinder/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bam
 		"""   
 
 rule kma_single_end_reads_mOTUs:
@@ -140,19 +140,18 @@ rule kma_single_end_reads_mOTUs:
     	output:
         	"results/kma_mOTUs/single_end/{single_reads}/{single_reads}.res",
         	"results/kma_mOTUs/single_end/{single_reads}/{single_reads}.mapstat",
-        	"results/kma_mOTUs/single_end/{single_reads}/{single_reads}.sorted.bam"
+        	"results/kma_mOTUs/single_end/{single_reads}/{single_reads}.bam"
 	params:
 		db="/home/databases/metagenomics/db/mOTUs_20221205/db_mOTU_20221205",
 		outdir="results/kma_mOTUs/single_end/{single_reads}/{single_reads}",
-		kma_params="-mem_mode -ef -1t1 -apm f -nf -sam -matrix",
-		reference="/home/databases/metagenomics/db/mOTUs_20221205/db_mOTU/db_mOTU_DB_CEN.fasta"
+		kma_params="-mem_mode -ef -1t1 -apm f -nf -sam -matrix"
 	envmodules:
 		"tools",
 		"kma/1.4.7",
 		"samtools/1.16"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/kma_mOTUs/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -| samtools view -u -bh -F 4 |samtools sort -o results/kma_mOTUs/single_end/{wildcards.single_reads}/{wildcards.single_reads}.sorted.bam
+		/usr/bin/time -v --output=results/kma_mOTUs/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -| samtools view -u -bh -F 4 |samtools sort -o results/kma_mOTUs/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bam
 		"""
 
 rule kma_single_end_reads_Silva:
@@ -164,19 +163,18 @@ rule kma_single_end_reads_Silva:
     	output:
         	"results/kma_silva/single_end/{single_reads}/{single_reads}.res",
         	"results/kma_silva/single_end/{single_reads}/{single_reads}.mapstat",
-        	"results/kma_silva/single_end/{single_reads}/{single_reads}.sorted.bam"
+        	"results/kma_silva/single_end/{single_reads}/{single_reads}.bam"
 	params:
 		db="/home/databases/metagenomics/db/Silva_20200116/Silva_20200116",
 		outdir="results/kma_silva/single_end/{single_reads}/{single_reads}",
-		kma_params="-mem_mode -ef -1t1 -nf -sam -matrix",
-		reference="/home/databases/metagenomics/db/Silva_20200116/SILVA_138_SSURef_tax_silva.fasta.gz"
+		kma_params="-mem_mode -ef -1t1 -nf -sam -matrix"
 	envmodules:
 		"tools",
 		"kma/1.4.7",
 		"samtools/1.16"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/kma_silva/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -| samtools view -u -bh -F 4 |samtools sort -o results/kma_silva/single_end/{wildcards.single_reads}/{wildcards.single_reads}.sorted.bam
+		/usr/bin/time -v --output=results/kma_silva/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -| samtools view -u -bh -F 4 |samtools sort -o results/kma_silva/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bam
 		"""
 
 rule kma_single_end_reads_gigaRes:
@@ -189,7 +187,7 @@ rule kma_single_end_reads_gigaRes:
         	"results/kma_gigaRes/single_end/{single_reads}/{single_reads}.res",
         	"results/kma_gigaRes/single_end/{single_reads}/{single_reads}.vcf.gz",
         	"results/kma_gigaRes/single_end/{single_reads}/{single_reads}.mapstat",
-        	"results/kma_gigaRes/single_end/{single_reads}/{single_reads}.sorted.bam"
+        	"results/kma_gigaRes/single_end/{single_reads}/{single_reads}.bam"
 	params:
 		db="/home/projects/cge/data/projects/other/niki/snakemake/ava_2.0/prerequisites/gigaRes_db/giga_res20220125",
 		outdir="results/kma_gigaRes/single_end/{single_reads}/{single_reads}",
@@ -201,7 +199,7 @@ rule kma_single_end_reads_gigaRes:
 		"samtools/1.16"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/kma_gigaRes/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -| samtools view -u -bh -F 4 --reference {params.reference} |samtools sort -o results/kma_gigaRes/single_end/{wildcards.single_reads}/{wildcards.single_reads}.sorted.bam
+		/usr/bin/time -v --output=results/kma_gigaRes/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -| samtools view -u -bh -F 4 --reference {params.reference} |samtools sort -o results/kma_gigaRes/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bam
 		"""  
 
 rule kma_single_end_reads_genomic:
@@ -213,7 +211,7 @@ rule kma_single_end_reads_genomic:
     	output:
         	"results/kma_genomic/single_end/{single_reads}/{single_reads}.res",
         	"results/kma_genomic/single_end/{single_reads}/{single_reads}.mapstat",
-        	"results/kma_genomic/single_end/{single_reads}/{single_reads}.sorted.bam"
+        	"results/kma_genomic/single_end/{single_reads}/{single_reads}.bam"
 	params:
 		db="/home/databases/metagenomics/kma_db/genomic_20220524/genomic_20220524",
 		outdir="results/kma_genomic/single_end/{single_reads}/{single_reads}",
@@ -223,24 +221,8 @@ rule kma_single_end_reads_genomic:
 		"kma/1.4.7"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/kma_genomic/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -| samtools view -u -bh -F 4 |samtools sort -o results/kma_genomic/single_end/{wildcards.single_reads}/{wildcards.single_reads}.sorted.bam
+		/usr/bin/time -v --output=results/kma_genomic/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -| samtools view -u -bh -F 4 |samtools sort -o results/kma_genomic/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bam
 		""" 
-
-rule samtools_single_end_reads:
-	"""
-	Fixing pair coordinates and sorting using Samtools
-	"""
-	input:
-		"results/kma/single_end/{single_reads}/{single_reads}.sam"
-	output:
-		"results/samtools/single_end/{single_reads}/{single_reads}.sorted.bam"
-	envmodules:
-		"tools",
-		"samtools/1.16"
-	shell:
-		"""
-		/usr/bin/time -v --output=results/samtools/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench samtools fixmate -m {input} -| samtools view -u -F 4 |samtools sort -o {output}
-		"""
 
 rule mash_sketch_single_end_reads:
 	"""
