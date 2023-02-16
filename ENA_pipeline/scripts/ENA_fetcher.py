@@ -2,6 +2,9 @@ import requests
 import pandas as pd
 import numpy as np
 
+class failedQuery(Exception):
+    pass
+
 class ENAfetcher:
 
     def __init__(self, url='https://www.ebi.ac.uk/ena/portal/api/search?'):
@@ -12,8 +15,8 @@ class ENAfetcher:
         self.nleg = "%3E%3D" # >=
         self.leg = "%3C%3D" # <=
         self.AND = "%20AND%20"
-        self.equal = "%3D"
-        self.quote = "%22"
+        self.equal = "%3D" # =
+        self.quote = "%22" # "
 
 
         self.readrun_fields = [
@@ -86,11 +89,8 @@ class ENAfetcher:
             df = pd.DataFrame(out)
             df.replace('', np.nan, inplace=True)
             return df
-
         else:
-            print(r.status_code)
-            print(f"Query failed {r.text} from url:\n{url}.")
-            return None
+            raise failedQuery(f"Query failed {r.text} from url:\n{url}.")
         
 
     def get_readrun(self, date=None, top_date=None, min_reads=1e5, library_source='METAGENOMIC', library_strategy='WGS', library_selection='RANDOM', limit=0):
