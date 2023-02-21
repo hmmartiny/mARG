@@ -1,9 +1,7 @@
 import requests
 import pandas as pd
 import numpy as np
-
-class failedQuery(Exception):
-    pass
+from funcs import failedQuery
 
 class ENAfetcher:
 

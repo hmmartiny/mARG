@@ -81,6 +81,14 @@ def parse_args():
         dest='library_selection'
     )
 
+    sql_args = parser.add_argument_group('Arguments for inserting and updating mysql database')
+    sql_args.add_argument(
+        '--no-update',
+        action='store_false',
+        help='Default is to update mysql database. If flag is given, do not update.',
+        dest='update_db'
+    )
+
     return parser.parse_args()
 
 if __name__ == "__main__":
