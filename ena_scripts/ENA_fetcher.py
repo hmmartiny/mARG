@@ -31,7 +31,7 @@ class ENAfetcher:
             'sample_accession', 'location', 'country',
             'collection_date', 'description', 'sampling_campaign',
             'host', 'host_tax_id', 'host_status',
-            'host_sex', 'host_phenotype', 'investigation_type', 'sample_title'
+            'host_sex', 'host_phenotype', 'investigation_type', 'sample_title', 'scientific_name'
         ]
         self.envsample_fields = [
             'sample_accession', 'environment_biome',

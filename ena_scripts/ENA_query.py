@@ -13,7 +13,6 @@ as well as producing a file that contains ascp commands for downloading files wi
 
 __author__ = """Hannah-Marie Martiny (hmmartiny)"""
 
-
 def parse_args():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
@@ -24,6 +23,12 @@ def parse_args():
         default='runs.json',
         help='Write runs to download to a JSON file.',
         dest='json_file'
+    )
+    out_args.add_argument(
+        '--build_report',
+        action='store_true',
+        help='If given, build a report with statistics of what was matched with this query.',
+        dest='build_report'
     )
 
     ena_args = parser.add_argument_group('Arguments for retrieving and filtering ENA metadata')
@@ -112,14 +117,18 @@ if __name__ == "__main__":
 
     # get sample metadata
     print("Pulling samples metadata...", end='\r')
-    # sample_records = ena.get_sampledata(
-    #     sample_accessions=run_records['sample_accession'].unique().tolist(),
-    #     date=args.low_date, top_date=args.top_date
-    # )
+    sample_records = ena.get_sampledata(
+        sample_accessions=run_records['sample_accession'].unique().tolist(),
+        date=args.low_date, top_date=args.top_date
+    )
     print("Pulling samples metadata... Done\n")
+
+    records = run_records.merge(sample_records, how='left', on=['sample_accession', 'host_tax_id',], suffixes=['_run', '_sample'])
+    records.to_csv('matched_records_metadata.csv')
 
     # print(sample_records.head().T)
 
     # Build report
-    ENAreporter = reporter(metadata=run_records.copy())
-    ENAreporter.build(min_read_count=args.min_reads)
+    if args.build_report:
+        ENAreporter = reporter(metadata=run_records.copy())
+        ENAreporter.build(min_read_count=args.min_reads)
