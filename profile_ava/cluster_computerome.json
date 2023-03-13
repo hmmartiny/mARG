@@ -1,163 +1,135 @@
 {
     "__default__" :
     {
-     	"core" : "20",
+     	"core" : "20:thinnode",
         "time" : "06:00:00",
         "vmem" : "20G",
         "proj" : "cge"
     },
     "download_paired_end_reads" :
     {
-        "core" : "20",
-        "time" : "06:00:00",
+        "core" : "20:thinnode",
+        "time" : "04:00:00",
         "vmem" : "20G",
         "proj" : "cge"
     },
     "download_single_end_reads" :
     {
-        "core" : "20",
-        "time" : "06:00:00",
+        "core" : "20:thinnode",
+        "time" : "04:00:00",
         "vmem" : "20G",
         "proj" : "cge"
     },
     "trim_paired_end_reads" :
     {
-     	"core" : "20",
+     	"core" : "8:thinnode",
         "time" : "20:00:00",
-        "vmem" : "80G",
+        "vmem" : "40G",
         "proj" : "cge"
     },
     "trim_single_end_reads" :
     {
-     	"core" : "20",
+     	"core" : "8:thinnode",
         "time" : "20:00:00",
-        "vmem" : "80G",
+        "vmem" : "40G",
         "proj" : "cge"
     },
     "metaspades_paired_end_reads" :
     {
-        "core" : "20",
+        "core" : "20:thinnode",
         "time" : "100:00:00",
         "vmem" : "185G",
         "proj" : "cge"
     },
     "metaspades_single_end_reads" :
     {
-        "core" : "20",
+        "core" : "20:thinnode",
         "time" : "100:00:00",
         "vmem" : "185G",
         "proj" : "cge"
     },
     "kma_paired_end_reads_resfinder" :
     {
-     	"core" : "20",
+     	"core" : "20:thinnode",
         "time" : "06:00:00",
         "vmem" : "60G",
         "proj" : "cge"
     },
     "kma_single_end_reads_resfinder" :
     {
-     	"core" : "20",
+     	"core" : "20:thinnode",
         "time" : "06:00:00",
         "vmem" : "60G",
         "proj" : "cge"
     },
     "kma_paired_end_reads_mOTUs" :
     {
-        "core" : "20",
-        "time" : "06:00:00",
+        "core" : "20:thinnode",
+        "time" : "30:00:00",
         "vmem" : "60G",
         "proj" : "cge"
     },
     "kma_single_end_reads_mOTUs" :
     {
-        "core" : "20",
-        "time" : "06:00:00",
+        "core" : "20:thinnode",
+        "time" : "30:00:00",
         "vmem" : "60G",
         "proj" : "cge"
     },
     "kma_paired_end_reads_Silva" :
     {
-        "core" : "20",
-        "time" : "10:00:00",
-        "vmem" : "250G",
+        "core" : "4:fatnode",
+        "time" : "70:00:00",
+        "vmem" : "150G",
         "proj" : "cge"
     },
     "kma_single_end_reads_Silva" :
     {
-        "core" : "20",
-        "time" : "10:00:00",
-        "vmem" : "250G",
+        "core" : "4:fatnode",
+        "time" : "70:00:00",
+        "vmem" : "150G",
         "proj" : "cge"
     },
     "kma_paired_end_reads_gigaRes" :
     {
-        "core" : "20",
+        "core" : "2:thinnode",
         "time" : "06:00:00",
-        "vmem" : "60G",
+        "vmem" : "5G",
         "proj" : "cge"
     },
     "kma_single_end_reads_gigaRes" :
     {
-        "core" : "20",
+        "core" : "2:thinnode",
         "time" : "06:00:00",
-        "vmem" : "60G",
-        "proj" : "cge"
-    },
-    "kma_paired_end_reads_genomic" :
-    {
-        "core" : "20",
-        "time" : "10:00:00",
-        "vmem" : "250G",
-        "proj" : "cge"
-    },
-    "kma_single_end_reads_genomic" :
-    {
-        "core" : "20",
-        "time" : "10:00:00",
-        "vmem" : "250G",
-        "proj" : "cge"
-    },
-    "samtools_paired_end_reads" :
-    {
-     	"core" : "20",
-        "time" : "08:00:00",
-        "vmem" : "40G",
-        "proj" : "cge"
-    },
-    "samtools_single_end_reads" :
-    {
-     	"core" : "20",
-        "time" : "08:00:00",
-        "vmem" : "40G",
+        "vmem" : "5G",
         "proj" : "cge"
     },
     "mash_sketch_paired_end_reads" :
     {
-        "core" : "20",
-        "time" : "20:00:00",
+        "core" : "20:thinnode",
+        "time" : "04:00:00",
         "vmem" : "20G",
         "proj" : "cge"
     },
     "mash_sketch_single_end_reads" :
     {
-        "core" : "20",
-        "time" : "20:00:00",
+        "core" : "20:thinnode",
+        "time" : "04:00:00",
         "vmem" : "20G",
         "proj" : "cge"
     },
     "seed_extender_paired_reads" :
     {
-        "core" : "20",
-        "time" : "72:00:00",
-        "vmem" : "80G",
+        "core" : "20:thinnode",
+        "time" : "40:00:00",
+        "vmem" : "50G",
         "proj" : "cge"
     },
     "seed_extender_single_reads" :
     {
-        "core" : "20",
-        "time" : "72:00:00",
-        "vmem" : "80G",
+        "core" : "20:thinnode",
+        "time" : "40:00:00",
+        "vmem" : "50G",
         "proj" : "cge"
     }
 }
