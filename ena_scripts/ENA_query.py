@@ -1,9 +1,11 @@
 import argparse
 import datetime
 import numpy as np
+import re
 
 from ENA_fetcher import ENAfetcher
 from ena_report import reporter
+from funcs import query_db
 
 __doc__ = """
 This program queries ENA for data that remains to be downloaded by looking at what files have been published since a specific date.
@@ -88,6 +90,12 @@ def parse_args():
         help='Default is to update mysql database. If flag is given, do not update.',
         dest='update_db'
     )
+    sql_args.add_argument(
+        '--no-silva-check',
+        action='store_false',
+        help='If given, do not check whether run_accession already has been mapped against Silva db',
+        dest='silva_check'
+    )
 
     return parser.parse_args()
 
@@ -107,9 +115,6 @@ if __name__ == "__main__":
         library_selection=args.library_selection,
     )
     print("Pulling read_run metadata... Done")
-
-    print(run_records.head().T)
-
     # TODO: Implement read count filtering to differentiate between sequencing platforms and not only on counts
     # That way we should be able to include long read data
 
@@ -119,9 +124,6 @@ if __name__ == "__main__":
     # convert library_layout for long-read so pipeline can handle it
     run_records.loc[run_records['instrument_platform'].isin(['OXFORD_NANOPORE', 'PACBIO_SMRT']), 'library_layout'] = 'LONG_READ'
 
-    # to json for pipeline
-    # runs = run_records[['run_accession', 'library_layout']].rename(columns={'library_layout': 'type'}).copy().set_index('run_accession')
-    # runs.to_json(args.json_file, orient='index')
 
     # get sample metadata
     print("Pulling samples metadata...", end='\r')
@@ -131,12 +133,47 @@ if __name__ == "__main__":
     )
     print("Pulling samples metadata... Done\n")
 
+    print("Pulling assembly data...", end='\r')
+    assembly_records = ena.get_assemblydata(sample_accessions=run_records['sample_accession'].unique().tolist())
+    print("Pulling assembly data... Done")
+
     records = run_records.merge(sample_records, how='left', on=['sample_accession', 'host_tax_id',], suffixes=['_run', '_sample'])
-    records.to_csv('matched_records_metadata.csv')
+
+     # remove runs that has negative control in sample title or in alias
+    p_neg = re.compile(r'(((n|N)egative)?(_|\s)?((c|C)ontrol)?)*')
+
+
+    records.to_hdf('matched_records_metadata.h5', key='records')
+    assembly_records.to_csv('matched_records_metadata.h5', key='assembly')
+
+    records['run_seed_extender']  = True
+    if assembly_records is not None:
+        records['run_seed_extender'] = ~(records['sample_accession'].isin(assembly_records['sample_accession']).astype('bool'))
+
+    records['run_kma_silva'] = True
+    if args.silva_check:
+        try:
+            silva_runs = query_db(
+                "use AvA; select run_accession, run_accession in (SELECT DISTINCT(run_accession) from Bac_public) as silva_run from Meta_public where run_accession in ({})".format(
+                    ",".join([f"\'{r}\'" for r in records['run_accession'].tolist()])
+                ),
+                return_df=True
+            )
+        
+            records.loc[
+                records['run_accession'].isin(silva_runs.query("silva_run == 1")['run_accession']), 
+                'run_kma_silva'
+            ] = False
+        except:
+            pass
+
+    # to json for pipeline
+    runs = records[['run_accession', 'library_layout', 'run_seed_extender', 'run_kma_silva']].rename(columns={'library_layout': 'type'}).copy().set_index('run_accession')
+    runs.to_json(args.json_file, orient='index')
 
     # print(sample_records.head().T)
 
     # Build report
     if args.build_report:
-        ENAreporter = reporter(metadata=run_records.copy())
+        ENAreporter = reporter(metadata=records.copy())
         ENAreporter.build(min_read_count=args.min_reads)

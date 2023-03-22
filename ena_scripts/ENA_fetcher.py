@@ -29,13 +29,18 @@ class ENAfetcher:
             'sample_accession', 'location', 'country',
             'collection_date', 'description', 'sampling_campaign',
             'host', 'host_tax_id', 'host_status',
-            'host_sex', 'host_phenotype', 'investigation_type', 'sample_title', 'scientific_name'
+            'host_sex', 'host_phenotype', 'investigation_type', 'sample_title', 'scientific_name', 'sample_alias'
         ]
         self.envsample_fields = [
             'sample_accession', 'environment_biome',
             'environment_feature', 'environment_material',
             'environmental_package', 'host_tax_id'
         ] 
+
+        self.analysis_assembly_fields = [
+            'sample_accession', 'analysis_accession', 
+            'generated_ftp', 'submitted_ftp',
+        ]
 
         self.sample_fields_ext = self.sample_fields + self.envsample_fields
 
@@ -92,7 +97,7 @@ class ENAfetcher:
         
 
     def get_readrun(self, date=None, top_date=None, min_reads=1e5, library_source='METAGENOMIC', library_strategy='WGS', library_selection='RANDOM', limit=0):
-        """Retrieve records containg run_accession information published from DATE and onward until current date.
+        """Retrieve records containg run_accession information published from DATE and onward until top_date.
 
         Parameters
         ----------
@@ -199,3 +204,15 @@ class ENAfetcher:
         df = df.loc[df.sample_accession.isin(sample_accessions)]
         #df = self.get_loop(ids=sample_accessions, result='sample', fields=self.comma.join(self.sample_fields_ext), k=k, accession='sample_accession')
         return df#[self.sample_fields], df[self.envsample_fields]
+
+    def get_assemblydata(self, sample_accessions=[]):
+
+        query = f'&query=assembly_type{self.equal}{self.quote}primary metagenome{self.quote}'
+        try:
+            df = self.build_url(result='analysis', fields=self.comma.join(self.analysis_assembly_fields), query=query)
+
+            if len(sample_accessions) > 0:
+                df = df.loc[df['sample_accession'].isin(sample_accessions)]
+            return df
+        except pd.errors.EmptyDataError:
+            return None
