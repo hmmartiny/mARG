@@ -1,8 +1,8 @@
 {
     "__default__" :
     {
-     	"core" : "20:thinnode",
-        "time" : "06:00:00",
+     	"core" : "1:thinnode",
+        "time" : "00:30:00",
         "vmem" : "20G",
         "proj" : "cge"
     },
@@ -34,34 +34,6 @@
         "vmem" : "40G",
         "proj" : "cge"
     },
-    "metaspades_paired_end_reads" :
-    {
-        "core" : "20:thinnode",
-        "time" : "100:00:00",
-        "vmem" : "185G",
-        "proj" : "cge"
-    },
-    "metaspades_single_end_reads" :
-    {
-        "core" : "20:thinnode",
-        "time" : "100:00:00",
-        "vmem" : "185G",
-        "proj" : "cge"
-    },
-    "kma_paired_end_reads_resfinder" :
-    {
-     	"core" : "20:thinnode",
-        "time" : "06:00:00",
-        "vmem" : "60G",
-        "proj" : "cge"
-    },
-    "kma_single_end_reads_resfinder" :
-    {
-     	"core" : "20:thinnode",
-        "time" : "06:00:00",
-        "vmem" : "60G",
-        "proj" : "cge"
-    },
     "kma_paired_end_reads_mOTUs" :
     {
         "core" : "20:thinnode",
@@ -76,28 +48,14 @@
         "vmem" : "60G",
         "proj" : "cge"
     },
-    "kma_paired_end_reads_Silva" :
-    {
-        "core" : "4:fatnode",
-        "time" : "70:00:00",
-        "vmem" : "150G",
-        "proj" : "cge"
-    },
-    "kma_single_end_reads_Silva" :
-    {
-        "core" : "4:fatnode",
-        "time" : "70:00:00",
-        "vmem" : "150G",
-        "proj" : "cge"
-    },
-    "kma_paired_end_reads_gigaRes" :
+    "kma_paired_end_reads_panRes" :
     {
         "core" : "2:thinnode",
         "time" : "06:00:00",
         "vmem" : "5G",
         "proj" : "cge"
     },
-    "kma_single_end_reads_gigaRes" :
+    "kma_single_end_reads_panRes" :
     {
         "core" : "2:thinnode",
         "time" : "06:00:00",

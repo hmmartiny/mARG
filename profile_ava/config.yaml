@@ -1,4 +1,4 @@
-cluster: qsub -W group_list={cluster.proj} -A {cluster.proj} -l nodes=1:ppn={cluster.core},mem={cluster.vmem},walltime={cluster.time} -e /dev/null -o /dev/null
+cluster: qsub -W group_list={cluster.proj} -A {cluster.proj} -l nodes=1:ppn={cluster.core},mem={cluster.vmem},walltime={cluster.time} -e snakemake.err -o snakemake.log
 cluster-config: profile_ava/cluster_computerome.json
 use-envmodules: True
 restart-times: 2
