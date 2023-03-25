@@ -37,7 +37,6 @@ rule trim_paired_end_reads:
 		length_required="50",
 		cut_tail="--cut_tail",
 		out_merge="results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_merged.trimmed.fastq",
-		unpaired="results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_unpaired.trimmed.fastq",
 		h="results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}.html",
 		j="results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}.json"
 	envmodules:
@@ -45,9 +44,9 @@ rule trim_paired_end_reads:
 		"fastp/0.23.2"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/trimmed_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench fastp -i {input.in1} -I {input.in2} -o {output.out1} -O {output.out2} --merge --merged_out {params.out_merge} --unpaired1 {params.unpaired} --unpaired2 {params.unpaired} --overlap_diff_limit {params.overlap_diff_limit} --average_qual {params.average_qual} --length_required {params.length_required} {params.cut_tail} -h {params.h} -j {params.j}
-		cat {params.out_merge} {params.unpaired} > {output.singleton}
-		rm {params.out_merge} {params.unpaired}
+		/usr/bin/time -v --output=results/trimmed_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench fastp -i {input.in1} -I {input.in2} -o {output.out1} -O {output.out2} --merge --merged_out {params.out_merge} --unpaired1 {output.singleton} --unpaired2 {output.singleton} --overlap_diff_limit {params.overlap_diff_limit} --average_qual {params.average_qual} --length_required {params.length_required} {params.cut_tail} -h {params.h} -j {params.j}
+		cat {params.out_merge} >> {output.singleton}
+		rm {params.out_merge}
 		touch {output.check_file_trim}
 		"""
 
@@ -62,20 +61,18 @@ rule kma_paired_end_reads_mOTUs:
     	output:
         	"results/kma_mOTUs/paired_end/{paired_reads}/{paired_reads}.res",
         	"results/kma_mOTUs/paired_end/{paired_reads}/{paired_reads}.mapstat",
-        	"results/kma_mOTUs/paired_end/{paired_reads}/{paired_reads}.bam",
         	check_file_kma_mOTUs="results/kma_mOTUs/paired_end/{paired_reads}/{paired_reads}_check_file_kma.txt"
 	params:
 		db="/home/databases/metagenomics/db/mOTUs_20221205/db_mOTU_20221205",
 		outdir="results/kma_mOTUs/paired_end/{paired_reads}/{paired_reads}",
-		kma_params="-mem_mode -ef -1t1 -apm f -nf -sam -matrix"
+		kma_params="-mem_mode -ef -1t1 -apm p -oa -matrix"
 	envmodules:
 		"tools",
 		"kma/1.4.7",
 		"samtools/1.16"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/kma_mOTUs/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench kma -ipe {input.read_1} {input.read_2} -i {input.read_3} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_mOTUs/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bam
-		rm results/kma_mOTUs/paired_end/{wildcards.paired_reads}/*.aln
+		/usr/bin/time -v --output=results/kma_mOTUs/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench kma -ipe {input.read_1} {input.read_2} -i {input.read_3} -o {params.outdir} -t_db {params.db} {params.kma_params}
 		gzip results/kma_mOTUs/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.fsa
 		touch {output.check_file_kma_mOTUs}
 		"""
@@ -119,17 +116,14 @@ rule mash_sketch_paired_end_reads:
 		read_2=ancient("results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_2.trimmed.fastq"),
 		read_3=ancient("results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_singleton.trimmed.fastq")
 	output:
-		"results/mash_sketch/paired_end/{paired_reads}/{paired_reads}.trimmed.fastq.msh",
+		out="results/mash_sketch/paired_end/{paired_reads}/{paired_reads}.trimmed.fastq.msh",
 		check_file_mash="results/mash_sketch/paired_end/{paired_reads}/{paired_reads}_check_file_mash.txt"
 	envmodules:
 		"tools",
 		"mash/2.3"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/mash_sketch/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench_cat cat {input.read_1} {input.read_2} {input.read_3} > results/trimmed_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.trimmed.fastq
-		/usr/bin/time -v --output=results/mash_sketch/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench_mash mash sketch results/trimmed_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.trimmed.fastq 
-		mv results/trimmed_reads/paired_end/{wildcards.paired_reads}/*.msh results/mash_sketch/paired_end/{wildcards.paired_reads}
-		rm results/trimmed_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.trimmed.fastq
+		/usr/bin/time -v --output=results/mash_sketch/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench_mash cat {input.read_1} {input.read_2} {input.read_3} | mash sketch -k 31 -s 10000 -I {wildcards.paired_reads} -C Paired -r -o {output.out} -
 		touch {output.check_file_mash}
 		"""
 

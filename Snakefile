@@ -4,7 +4,7 @@ import os
 include: "rules/analysis_paired_read.smk"
 include: "rules/analysis_single_read.smk"
 
-with open("input_samples.json", 'r') as f:
+with open("input_samples1.json", 'r') as f:
   data = json.load(f)
 
 accession=[]
@@ -42,11 +42,9 @@ rule all:
 		expand("results/trimmed_reads/single_end/{single_reads}/{single_reads}_check_file_trim.txt", single_reads=single),
 		expand("results/kma_mOTUs/paired_end/{paired_reads}/{paired_reads}.res", paired_reads=paired),
 		expand("results/kma_mOTUs/paired_end/{paired_reads}/{paired_reads}.mapstat", paired_reads=paired),
-		expand("results/kma_mOTUs/paired_end/{paired_reads}/{paired_reads}.bam", paired_reads=paired),
 		expand("results/kma_mOTUs/paired_end/{paired_reads}/{paired_reads}_check_file_kma.txt", paired_reads=paired),
 		expand("results/kma_mOTUs/single_end/{single_reads}/{single_reads}.res", single_reads=single),
 		expand("results/kma_mOTUs/single_end/{single_reads}/{single_reads}.mapstat", single_reads=single),
-		expand("results/kma_mOTUs/single_end/{single_reads}/{single_reads}.bam", single_reads=single),
 		expand("results/kma_mOTUs/single_end/{single_reads}/{single_reads}_check_file_kma.txt", single_reads=single),
 		expand("results/kma_panres/paired_end/{paired_reads}/{paired_reads}.res", paired_reads=paired),
 		expand("results/kma_panres/paired_end/{paired_reads}/{paired_reads}.mat.gz", paired_reads=paired),

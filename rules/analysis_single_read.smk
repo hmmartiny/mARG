@@ -57,14 +57,14 @@ rule kma_single_end_reads_mOTUs:
 	params:
 		db="/home/databases/metagenomics/db/mOTUs_20221205/db_mOTU_20221205",
 		outdir="results/kma_mOTUs/single_end/{single_reads}/{single_reads}",
-		kma_params="-mem_mode -ef -1t1 -apm f -nf -sam -matrix"
+		kma_params="-mem_mode -ef -1t1 -apm p -oa -matrix"
 	envmodules:
 		"tools",
 		"kma/1.4.7",
 		"samtools/1.16"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/kma_mOTUs/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_mOTUs/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bam
+		/usr/bin/time -v --output=results/kma_mOTUs/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params}
 		rm results/kma_mOTUs/single_end/{wildcards.single_reads}/*.aln
 		gzip results/kma_mOTUs/single_end/{wildcards.single_reads}/{wildcards.single_reads}.fsa
 		touch {output.check_file_kma_mOTUs}
@@ -105,15 +105,14 @@ rule mash_sketch_single_end_reads:
 	input:
 		ancient("results/trimmed_reads/single_end/{single_reads}/{single_reads}.trimmed.fastq")
 	output:
-		"results/mash_sketch/single_end/{single_reads}/{single_reads}.trimmed.fastq.msh",
+		out="results/mash_sketch/single_end/{single_reads}/{single_reads}.trimmed.fastq.msh",
 		check_file_mash="results/mash_sketch/single_end/{single_reads}/{single_reads}_check_file_mash.txt"
 	envmodules:
 		"tools",
 		"mash/2.3"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/mash_sketch/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench mash sketch {input}
-		mv results/trimmed_reads/single_end/{wildcards.single_reads}/*.msh results/mash_sketch/single_end/{wildcards.single_reads}
+		/usr/bin/time -v --output=results/mash_sketch/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench mash sketch -k 31 -s 10000 -o {output.out} -r {input}
 		touch {output.check_file_mash}
 		"""
 
