@@ -16,6 +16,7 @@ rule download_paired_end_reads:
 	shell:
 		"""
 		/usr/bin/time -v --output=results/raw_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench enaDataGet -f {params.type} -d {params.outdir} {wildcards.paired_reads}
+		bash check_status.sh results/raw_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
 		touch {output.check_file_raw}
 		"""
 
@@ -47,6 +48,7 @@ rule trim_paired_end_reads:
 		/usr/bin/time -v --output=results/trimmed_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench fastp -i {input.in1} -I {input.in2} -o {output.out1} -O {output.out2} --merge --merged_out {params.out_merge} --unpaired1 {output.singleton} --unpaired2 {output.singleton} --overlap_diff_limit {params.overlap_diff_limit} --average_qual {params.average_qual} --length_required {params.length_required} {params.cut_tail} -h {params.h} -j {params.j}
 		cat {params.out_merge} >> {output.singleton}
 		rm {params.out_merge}
+		bash check_status.sh results/trimmed_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
 		touch {output.check_file_trim}
 		"""
 
@@ -68,12 +70,14 @@ rule kma_paired_end_reads_mOTUs:
 		kma_params="-mem_mode -ef -1t1 -apm p -oa -matrix"
 	envmodules:
 		"tools",
-		"kma/1.4.7",
+		"kma/1.4.12a",
 		"samtools/1.16"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/kma_mOTUs/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench kma -ipe {input.read_1} {input.read_2} -i {input.read_3} -o {params.outdir} -t_db {params.db} {params.kma_params}
+		rm results/kma_mOTUs/paired_end/{wildcards.paired_reads}/*.aln
 		gzip results/kma_mOTUs/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.fsa
+		bash check_status.sh results/kma_mOTUs/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
 		touch {output.check_file_kma_mOTUs}
 		"""
 
@@ -97,13 +101,14 @@ rule kma_paired_end_reads_panRes:
 		kma_params="-mem_mode -ef -1t1 -nf -vcf -sam -matrix"
 	envmodules:
 		"tools",
-		"kma/1.4.7",
+		"kma/1.4.12a",
 		"samtools/1.16"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/kma_panres/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench kma -ipe {input.read_1} {input.read_2} -i {input.read_3} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_panres/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bam
 		rm results/kma_panres/paired_end/{wildcards.paired_reads}/*.aln
 		gzip results/kma_panres/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.fsa
+		bash check_status.sh results/kma_panres/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
 		touch {output.check_file_kma_panres}
 		"""
 
@@ -124,6 +129,7 @@ rule mash_sketch_paired_end_reads:
 	shell:
 		"""
 		/usr/bin/time -v --output=results/mash_sketch/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench_mash cat {input.read_1} {input.read_2} {input.read_3} | mash sketch -k 31 -s 10000 -I {wildcards.paired_reads} -C Paired -r -o {output.out} -
+		bash check_status.sh results/mash_sketch/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
 		touch {output.check_file_mash}
 		"""
 
@@ -150,12 +156,13 @@ rule seed_extender_paired_reads:
 		"kma/1.4.7",
 		"anaconda3/2022.10",
 		"spades/3.15.5",
-		"fqgrep/20221222"
+		"fqgrep/0.0.3"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench perl prerequisites/seed_extender/targetAsm.pl {params.seed} {params.temp_dir} {params.db} {input.read_1} {input.read_2} {input.read_3}
 		gzip results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.fasta
 		gzip results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.gfa
+		bash check_status.sh results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
 		touch {output.check_file_seed}
 		"""
 
