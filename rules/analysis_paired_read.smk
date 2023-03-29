@@ -112,6 +112,37 @@ rule kma_paired_end_reads_panRes:
 		touch {output.check_file_kma_panres}
 		"""
 
+rule kma_paired_end_reads_virulence_finder:
+	"""
+	Mapping raw paired reads for identifying AMR using KMA with virulence_finder db
+	"""
+	input: 
+		read_1=ancient("results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_1.trimmed.fastq"),
+		read_2=ancient("results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_2.trimmed.fastq"),
+		read_3=ancient("results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_singleton.trimmed.fastq")
+	output:
+		"results/kma_virulence/paired_end/{paired_reads}/{paired_reads}.res",
+		"results/kma_virulence/paired_end/{paired_reads}/{paired_reads}.mat.gz",
+		"results/kma_virulence/paired_end/{paired_reads}/{paired_reads}.mapstat",
+		"results/kma_virulence/paired_end/{paired_reads}/{paired_reads}.bam",
+		check_file_kma_virulence="results/kma_virulence/paired_end/{paired_reads}/{paired_reads}_check_file_kma.txt"
+	params:
+		db="/home/projects/cge/data/projects/other/niki/snakemake/ava_2.0/prerequisites/virulence_finder_db/virulence_finder_db.fsa",
+		outdir="results/kma_virulence/paired_end/{paired_reads}/{paired_reads}",
+		kma_params="-ef -1t1 -nf -vcf -sam -matrix"
+	envmodules:
+		"tools",
+		"kma/1.4.12a",
+		"samtools/1.16"
+	shell:
+		"""
+		/usr/bin/time -v --output=results/kma_virulence/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench kma -ipe {input.read_1} {input.read_2} -i {input.read_3} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_virulence/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bam
+		rm results/kma_virulence/paired_end/{wildcards.paired_reads}/*.aln
+		gzip results/kma_virulence/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.fsa
+		bash check_status.sh results/kma_virulence/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
+		touch {output.check_file_kma_virulence}
+		"""
+
 rule mash_sketch_paired_end_reads:
 	"""
 	Creation of mash sketches of paired end reads using mash
@@ -175,6 +206,7 @@ rule cleanup_paired_end_reads:
 		check_file_trim="results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_check_file_trim.txt",
 		check_file_kma_mOTUs="results/kma_mOTUs/paired_end/{paired_reads}/{paired_reads}_check_file_kma.txt",
 		check_file_kma_panres="results/kma_panres/paired_end/{paired_reads}/{paired_reads}_check_file_kma.txt",
+		check_file_kma_virulence="results/kma_virulence/paired_end/{paired_reads}/{paired_reads}_check_file_kma.txt",
 		check_file_mash="results/mash_sketch/paired_end/{paired_reads}/{paired_reads}_check_file_mash.txt",
 		check_file_seed="results/seed_extender/paired_end/{paired_reads}/{paired_reads}_check_file_seed.txt"
 	output:

@@ -62,6 +62,20 @@
         "vmem" : "5G",
         "proj" : "cge"
     },
+    "kma_paired_end_reads_virulence_finder" :
+    {
+        "core" : "2:thinnode",
+        "time" : "06:00:00",
+        "vmem" : "5G",
+        "proj" : "cge"
+    },
+    "kma_single_end_reads_virulence_finder" :
+    {
+        "core" : "2:thinnode",
+        "time" : "06:00:00",
+        "vmem" : "5G",
+        "proj" : "cge"
+    },
     "mash_sketch_paired_end_reads" :
     {
         "core" : "20:thinnode",

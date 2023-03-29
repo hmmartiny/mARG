@@ -99,7 +99,36 @@ rule kma_single_end_reads_panRes:
 		gzip results/kma_panres/single_end/{wildcards.single_reads}/{wildcards.single_reads}.fsa
 		bash check_status.sh results/kma_panres/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench {wildcards.single_reads} {rule}
 		touch {output.check_file_kma_panres}
-		"""  
+		"""
+
+rule kma_single_end_reads_virulence_finder:
+	"""
+	Mapping raw single reads for identifying AMR using KMA with virulence_finder db
+	"""
+	input: 
+		ancient("results/trimmed_reads/single_end/{single_reads}/{single_reads}.trimmed.fastq")
+	output:
+		"results/kma_virulence/single_end/{single_reads}/{single_reads}.res",
+		"results/kma_virulence/single_end/{single_reads}/{single_reads}.mat.gz",
+		"results/kma_virulence/single_end/{single_reads}/{single_reads}.mapstat",
+		"results/kma_virulence/single_end/{single_reads}/{single_reads}.bam",
+		check_file_kma_virulence="results/kma_virulence/single_end/{single_reads}/{single_reads}_check_file_kma.txt"
+	params:
+		db="/home/projects/cge/data/projects/other/niki/snakemake/ava_2.0/prerequisites/virulence_finder_db/virulence_finder_db.fsa",
+		outdir="results/kma_virulence/single_end/{single_reads}/{single_reads}",
+		kma_params="-ef -1t1 -nf -vcf -sam -matrix"
+	envmodules:
+		"tools",
+		"kma/1.4.12a",
+		"samtools/1.16"
+	shell:
+		"""
+		/usr/bin/time -v --output=results/kma_virulence/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_virulence/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bam
+		rm results/kma_virulence/single_end/{wildcards.single_reads}/*.aln
+		gzip results/kma_virulence/single_end/{wildcards.single_reads}/{wildcards.single_reads}.fsa
+		bash check_status.sh results/kma_virulence/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench {wildcards.single_reads} {rule}
+		touch {output.check_file_kma_virulence}
+		"""   
 
 rule mash_sketch_single_end_reads:
 	"""
@@ -160,6 +189,7 @@ rule cleanup_single_end_reads:
 		check_file_trim="results/trimmed_reads/single_end/{single_reads}/{single_reads}_check_file_trim.txt",
 		check_file_kma_mOTUs="results/kma_mOTUs/single_end/{single_reads}/{single_reads}_check_file_kma.txt",
 		check_file_kma_panres="results/kma_panres/single_end/{single_reads}/{single_reads}_check_file_kma.txt",
+		check_file_kma_virulence="results/kma_virulence/single_end/{single_reads}/{single_reads}_check_file_kma.txt",
 		check_file_mash="results/mash_sketch/single_end/{single_reads}/{single_reads}_check_file_mash.txt",
 		check_file_seed="results/seed_extender/single_end/{single_reads}/{single_reads}_check_file_seed.txt"
 	output:
