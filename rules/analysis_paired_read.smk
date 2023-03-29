@@ -98,7 +98,7 @@ rule kma_paired_end_reads_panRes:
 	params:
 		db="/home/databases/metagenomics/db/panres_20230313/panres_20230313",
 		outdir="results/kma_panres/paired_end/{paired_reads}/{paired_reads}",
-		kma_params="-mem_mode -ef -1t1 -nf -vcf -sam -matrix"
+		kma_params="-ef -1t1 -nf -vcf -sam -matrix"
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
