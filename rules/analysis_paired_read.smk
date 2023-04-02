@@ -184,7 +184,7 @@ rule seed_extender_paired_reads:
 		db="prerequisites/resfinder_db/resfinder_db_all.fsa"
 	envmodules:
 		"tools",
-		"kma/1.4.7",
+		"kma/1.4.12a",
 		"anaconda3/2022.10",
 		"spades/3.15.5",
 		"fqgrep/0.0.3"
