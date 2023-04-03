@@ -12,7 +12,10 @@ rule download_paired_end_reads:
 	envmodules:
 		"tools",
 		"anaconda3/2022.10",
-		"enabrowsertools/1.1.0"
+		"enabrowsertools/1.1.0",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
+
 	shell:
 		"""
 		/usr/bin/time -v --output=results/raw_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench enaDataGet -f {params.type} -d {params.outdir} {wildcards.paired_reads}
@@ -42,7 +45,9 @@ rule trim_paired_end_reads:
 		j="results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}.json"
 	envmodules:
 		"tools",
-		"fastp/0.23.2"
+		"fastp/0.23.2",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/trimmed_reads/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench fastp -i {input.in1} -I {input.in2} -o {output.out1} -O {output.out2} --merge --merged_out {params.out_merge} --unpaired1 {output.singleton} --unpaired2 {output.singleton} --overlap_diff_limit {params.overlap_diff_limit} --average_qual {params.average_qual} --length_required {params.length_required} {params.cut_tail} -h {params.h} -j {params.j}
@@ -71,7 +76,9 @@ rule kma_paired_end_reads_mOTUs:
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
-		"samtools/1.16"
+		"samtools/1.16",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/kma_mOTUs/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench kma -ipe {input.read_1} {input.read_2} -i {input.read_3} -o {params.outdir} -t_db {params.db} {params.kma_params}
@@ -102,7 +109,9 @@ rule kma_paired_end_reads_panRes:
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
-		"samtools/1.16"
+		"samtools/1.16",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/kma_panres/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench kma -ipe {input.read_1} {input.read_2} -i {input.read_3} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_panres/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bam
@@ -124,19 +133,20 @@ rule kma_paired_end_reads_virulence_finder:
 		"results/kma_virulence/paired_end/{paired_reads}/{paired_reads}.res",
 		"results/kma_virulence/paired_end/{paired_reads}/{paired_reads}.mat.gz",
 		"results/kma_virulence/paired_end/{paired_reads}/{paired_reads}.mapstat",
-		"results/kma_virulence/paired_end/{paired_reads}/{paired_reads}.bam",
 		check_file_kma_virulence="results/kma_virulence/paired_end/{paired_reads}/{paired_reads}_check_file_kma.txt"
 	params:
-		db="/home/projects/cge/data/projects/other/niki/snakemake/ava_2.0/prerequisites/virulence_finder_db/virulence_finder_db.fsa",
+		db="prerequisites/virulence_finder_db/virulence_finder_db.fsa",
 		outdir="results/kma_virulence/paired_end/{paired_reads}/{paired_reads}",
-		kma_params="-ef -1t1 -nf -vcf -sam -matrix"
+		kma_params="-ef -1t1 -nf -vcf -matrix"
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
-		"samtools/1.16"
+		"samtools/1.16",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/kma_virulence/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench kma -ipe {input.read_1} {input.read_2} -i {input.read_3} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_virulence/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bam
+		/usr/bin/time -v --output=results/kma_virulence/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench kma -ipe {input.read_1} {input.read_2} -i {input.read_3} -o {params.outdir} -t_db {params.db} {params.kma_params}
 		rm results/kma_virulence/paired_end/{wildcards.paired_reads}/*.aln
 		gzip results/kma_virulence/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.fsa
 		bash check_status.sh results/kma_virulence/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
@@ -156,7 +166,9 @@ rule mash_sketch_paired_end_reads:
 		check_file_mash="results/mash_sketch/paired_end/{paired_reads}/{paired_reads}_check_file_mash.txt"
 	envmodules:
 		"tools",
-		"mash/2.3"
+		"mash/2.3",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/mash_sketch/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench_mash cat {input.read_1} {input.read_2} {input.read_3} | mash sketch -k 31 -s 10000 -I {wildcards.paired_reads} -C Paired -r -o {output.out} -
@@ -187,7 +199,9 @@ rule seed_extender_paired_reads:
 		"kma/1.4.12a",
 		"anaconda3/2022.10",
 		"spades/3.15.5",
-		"fqgrep/0.0.3"
+		"fqgrep/0.0.3",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench perl prerequisites/seed_extender/targetAsm.pl {params.seed} {params.temp_dir} {params.db} {input.read_1} {input.read_2} {input.read_3}

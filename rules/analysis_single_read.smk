@@ -11,7 +11,9 @@ rule download_single_end_reads:
 	envmodules:
 		"tools",
 		"anaconda3/2022.10",
-		"enabrowsertools/1.1.0"
+		"enabrowsertools/1.1.0",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/raw_reads/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench enaDataGet -f {params.type} -d {params.outdir} {wildcards.single_reads}
@@ -37,7 +39,9 @@ rule trim_single_end_reads:
 		j="results/trimmed_reads/single_end/{single_reads}/{single_reads}.json"
 	envmodules:
 		"tools",
-		"fastp/0.23.2"
+		"fastp/0.23.2",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/trimmed_reads/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench fastp -i {input} -o {output} --overlap_diff_limit {params.overlap_diff_limit} --average_qual {params.average_qual} --length_required {params.length_required} {params.cut_tail} -h {params.h} -j {params.j}
@@ -62,7 +66,9 @@ rule kma_single_end_reads_mOTUs:
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
-		"samtools/1.16"
+		"samtools/1.16",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/kma_mOTUs/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params}
@@ -91,7 +97,9 @@ rule kma_single_end_reads_panRes:
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
-		"samtools/1.16"
+		"samtools/1.16",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/kma_panres/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_panres/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bam
@@ -111,19 +119,20 @@ rule kma_single_end_reads_virulence_finder:
 		"results/kma_virulence/single_end/{single_reads}/{single_reads}.res",
 		"results/kma_virulence/single_end/{single_reads}/{single_reads}.mat.gz",
 		"results/kma_virulence/single_end/{single_reads}/{single_reads}.mapstat",
-		"results/kma_virulence/single_end/{single_reads}/{single_reads}.bam",
 		check_file_kma_virulence="results/kma_virulence/single_end/{single_reads}/{single_reads}_check_file_kma.txt"
 	params:
-		db="/home/projects/cge/data/projects/other/niki/snakemake/ava_2.0/prerequisites/virulence_finder_db/virulence_finder_db.fsa",
+		db="prerequisites/virulence_finder_db/virulence_finder_db.fsa",
 		outdir="results/kma_virulence/single_end/{single_reads}/{single_reads}",
-		kma_params="-ef -1t1 -nf -vcf -sam -matrix"
+		kma_params="-ef -1t1 -nf -vcf -matrix"
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
-		"samtools/1.16"
+		"samtools/1.16",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/kma_virulence/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_virulence/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bam
+		/usr/bin/time -v --output=results/kma_virulence/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench kma -i {input} -o {params.outdir} -t_db {params.db} {params.kma_params}
 		rm results/kma_virulence/single_end/{wildcards.single_reads}/*.aln
 		gzip results/kma_virulence/single_end/{wildcards.single_reads}/{wildcards.single_reads}.fsa
 		bash check_status.sh results/kma_virulence/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench {wildcards.single_reads} {rule}
@@ -141,7 +150,9 @@ rule mash_sketch_single_end_reads:
 		check_file_mash="results/mash_sketch/single_end/{single_reads}/{single_reads}_check_file_mash.txt"
 	envmodules:
 		"tools",
-		"mash/2.3"
+		"mash/2.3",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/mash_sketch/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench mash sketch -k 31 -s 10000 -o {output.out} -r {input}
@@ -170,7 +181,9 @@ rule seed_extender_single_reads:
 		"kma/1.4.12a",
 		"anaconda3/2022.10",
 		"spades/3.15.5",
-		"fqgrep/0.0.3"
+		"fqgrep/0.0.3",
+		"mariadb/10.4.17",
+		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
 		/usr/bin/time -v --output=results/seed_extender/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench perl prerequisites/seed_extender/targetAsm.pl {params.seed} {params.temp_dir} {params.db} {input}
