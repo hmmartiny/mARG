@@ -76,7 +76,6 @@ rule kma_paired_end_reads_mOTUs:
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
-		"samtools/1.16",
 		"mariadb/10.4.17",
 		"mariadb-connector-c/3.3.2"
 	shell:
@@ -141,7 +140,6 @@ rule kma_paired_end_reads_virulence_finder:
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
-		"samtools/1.16",
 		"mariadb/10.4.17",
 		"mariadb-connector-c/3.3.2"
 	shell:
@@ -171,7 +169,7 @@ rule mash_sketch_paired_end_reads:
 		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/mash_sketch/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench_mash cat {input.read_1} {input.read_2} {input.read_3} | mash sketch -k 31 -s 10000 -I {wildcards.paired_reads} -C Paired -r -o {output.out} -
+		/usr/bin/time -v --output=results/mash_sketch/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench cat {input.read_1} {input.read_2} {input.read_3} | mash sketch -k 31 -s 10000 -I {wildcards.paired_reads} -C Paired -r -o {output.out} -
 		bash check_status.sh results/mash_sketch/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
 		touch {output.check_file_mash}
 		"""

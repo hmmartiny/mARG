@@ -66,7 +66,6 @@ rule kma_single_end_reads_mOTUs:
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
-		"samtools/1.16",
 		"mariadb/10.4.17",
 		"mariadb-connector-c/3.3.2"
 	shell:
@@ -127,7 +126,6 @@ rule kma_single_end_reads_virulence_finder:
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
-		"samtools/1.16",
 		"mariadb/10.4.17",
 		"mariadb-connector-c/3.3.2"
 	shell:
