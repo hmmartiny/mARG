@@ -192,7 +192,7 @@ rule seed_extender_single_reads:
 		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
-		if grep -q -v "#" {input.panres_mapstat_filtered}; 
+		if grep -q -v -m 1 "#" {input.panres_mapstat_filtered}; 
 		then
 			/usr/bin/time -v --output=results/seed_extender/single_end/{wildcards.single_reads}/{wildcards.single_reads}.bench perl prerequisites/seed_extender/targetAsm.pl {params.seed} {params.temp_dir} {params.db} {input}
 			gzip results/seed_extender/single_end/{wildcards.single_reads}/{wildcards.single_reads}.fasta

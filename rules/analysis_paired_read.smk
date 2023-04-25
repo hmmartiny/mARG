@@ -210,7 +210,7 @@ rule seed_extender_paired_reads:
 		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
-		if grep -q -v "#" {input.panres_mapstat_filtered}; 
+		if grep -q -v -m 1 "#" {input.panres_mapstat_filtered}; 
 		then 
 			/usr/bin/time -v --output=results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench perl prerequisites/seed_extender/targetAsm.pl {params.seed} {params.temp_dir} {params.db} {input.read_1} {input.read_2} {input.read_3}
 			gzip results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.fasta
