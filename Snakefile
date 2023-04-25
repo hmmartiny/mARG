@@ -4,7 +4,7 @@ import os
 include: "rules/analysis_paired_read.smk"
 include: "rules/analysis_single_read.smk"
 
-with open("input_samples1.json", 'r') as f:
+with open("runs_batch0.json", 'r') as f:
   data = json.load(f)
 
 accession=[]

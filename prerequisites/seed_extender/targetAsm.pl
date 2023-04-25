@@ -119,14 +119,19 @@ sub runIteration {
 	#my $SPAdes_cmd = sprintf("spades.py --only-assembler -o %s ", $SPAdes_out);
 	my $SPAdes_cmd = sprintf("spades.py --only-assembler -k 21,33,55,87 -o %s ", $SPAdes_out);
 	#my $SPAdes_cmd = sprintf("spades.py --only-assembler -k 27,47,67,87,107,127 -t 39 -m 188 -o %s ", $SPAdes_out);
-	if($se == 1) {
+	my $valid_files = 0;
+	$valid_files++ if(&checkTarget(sprintf("%s.fq", $filename)) == 0);
+	$valid_files += 2 if(&checkTarget(sprintf("%s%s.fq", $filename, "_1")) == 0);
+	if($valid_files == 1) {
 		$SPAdes_cmd .= sprintf("--sc -s %s.fq", $filename);
-	} elsif($se == 2) {
+	} elsif($valid_files == 2) {
 		$SPAdes_cmd .= sprintf("--meta -1 %s%s.fq -2 %s%s.fq", $filename, "_1", $filename, "_2");
-	} else {
+	} elsif($valid_files == 3) {
 		$SPAdes_cmd .= sprintf("--meta -1 %s%s.fq -2 %s%s.fq -s %s.fq", $filename, "_1", $filename, "_2", $filename);
 	}
-	&runCmDie($SPAdes_cmd);
+	if($valid_files != 0) {
+		&runCmDie($SPAdes_cmd);
+	}
 	
 	# Get contigs with original matches
 	if(&checkTarget(sprintf("%s/scaffolds.fasta", $SPAdes_out)) == 0) {

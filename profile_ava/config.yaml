@@ -3,6 +3,6 @@ cluster-config: profile_ava/cluster_computerome.json
 use-envmodules: True
 restart-times: 0
 latency-wait: 200
-jobs: 15
+jobs: 150
 keep-going: True
 rerun-incomplete: True

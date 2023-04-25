@@ -104,11 +104,17 @@ rule kma_paired_end_reads_panRes:
 	params:
 		db="/home/databases/metagenomics/db/panres_20230420/panres_20230420",
 		outdir="results/kma_panres/paired_end/{paired_reads}/{paired_reads}",
-		kma_params="-ef -1t1 -nf -vcf -sam -matrix"
+		kma_params="-ef -1t1 -nf -vcf -sam -matrix",
+		mapstat="results/kma_panres/paired_end/{paired_reads}/{paired_reads}.mapstat",
+		mapstat_filtered="results/kma_panres/paired_end/{paired_reads}/{paired_reads}.mapstat.filtered",
+		mapstat_table="prerequisites/mapstat_filtering/pan_master_gene_tbl.tsv"
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
 		"samtools/1.16",
+		"gcc/9.4.0",
+		"intel/perflibs/64/2020_update2",
+		"R/4.3.0",
 		"mariadb/10.4.17",
 		"mariadb-connector-c/3.3.2"
 	shell:
@@ -116,6 +122,7 @@ rule kma_paired_end_reads_panRes:
 		/usr/bin/time -v --output=results/kma_panres/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench kma -ipe {input.read_1} {input.read_2} -i {input.read_3} -o {params.outdir} -t_db {params.db} {params.kma_params} |samtools fixmate -m - -|samtools view -u -bh -F 4|samtools sort -o results/kma_panres/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bam
 		rm results/kma_panres/paired_end/{wildcards.paired_reads}/*.aln
 		gzip results/kma_panres/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.fsa
+		Rscript prerequisites/mapstat_filtering/mapstatFilters.R -i {params.mapstat} -o {params.mapstat_filtered} -r {params.mapstat_table}
 		bash check_status.sh results/kma_panres/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
 		touch {output.check_file_kma_panres}
 		"""
@@ -181,17 +188,18 @@ rule seed_extender_paired_reads:
 	input:
 		read_1=ancient("results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_1.trimmed.fastq"),
 		read_2=ancient("results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_2.trimmed.fastq"),
-		read_3=ancient("results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_singleton.trimmed.fastq")
+		read_3=ancient("results/trimmed_reads/paired_end/{paired_reads}/{paired_reads}_singleton.trimmed.fastq"),
+		panres_mapstat_filtered="results/kma_panres/paired_end/{paired_reads}/{paired_reads}.mapstat.filtered"
 	output:
-		"results/seed_extender/paired_end/{paired_reads}/{paired_reads}.fasta.gz",
-		"results/seed_extender/paired_end/{paired_reads}/{paired_reads}.gfa.gz",
-		"results/seed_extender/paired_end/{paired_reads}/{paired_reads}.frag.gz",
-		"results/seed_extender/paired_end/{paired_reads}/{paired_reads}.frag_raw.gz",
+		out_fasta="results/seed_extender/paired_end/{paired_reads}/{paired_reads}.fasta.gz",
+		out_gfa="results/seed_extender/paired_end/{paired_reads}/{paired_reads}.gfa.gz",
+		out_frag="results/seed_extender/paired_end/{paired_reads}/{paired_reads}.frag.gz",
+		out_frag_gz="results/seed_extender/paired_end/{paired_reads}/{paired_reads}.frag_raw.gz",
 		check_file_seed="results/seed_extender/paired_end/{paired_reads}/{paired_reads}_check_file_seed.txt"
 	params:
 		seed="-1",
 		temp_dir="results/seed_extender/paired_end/{paired_reads}/{paired_reads}",
-		db="prerequisites/resfinder_db/resfinder_db_all.fsa"
+		db="/home/databases/metagenomics/db/panres_20230420/pan.fa"
 	envmodules:
 		"tools",
 		"kma/1.4.12a",
@@ -202,11 +210,20 @@ rule seed_extender_paired_reads:
 		"mariadb-connector-c/3.3.2"
 	shell:
 		"""
-		/usr/bin/time -v --output=results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench perl prerequisites/seed_extender/targetAsm.pl {params.seed} {params.temp_dir} {params.db} {input.read_1} {input.read_2} {input.read_3}
-		gzip results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.fasta
-		gzip results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.gfa
-		bash check_status.sh results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
-		touch {output.check_file_seed}
+		if grep -q -v "#" {input.panres_mapstat_filtered}; 
+		then 
+			/usr/bin/time -v --output=results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench perl prerequisites/seed_extender/targetAsm.pl {params.seed} {params.temp_dir} {params.db} {input.read_1} {input.read_2} {input.read_3}
+			gzip results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.fasta
+			gzip results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.gfa
+			bash check_status.sh results/seed_extender/paired_end/{wildcards.paired_reads}/{wildcards.paired_reads}.bench {wildcards.paired_reads} {rule}
+			touch {output.check_file_seed}
+		else
+			touch {output.out_fasta}
+			touch {output.out_gfa}
+			touch {output.out_frag}
+			touch {output.out_frag_gz}
+			touch {output.check_file_seed}
+		fi
 		"""
 
 rule cleanup_paired_end_reads:
