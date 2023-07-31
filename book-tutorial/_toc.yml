@@ -1,0 +1,9 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: Tables
+- file: 00_Data_loading
+# - file: 01_Visualizing_metadata
